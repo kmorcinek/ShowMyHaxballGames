@@ -1,0 +1,58 @@
+﻿@using KMorcinek.ShowMyHaxballGames.ViewModels;
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<GamesViewModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Show your Fifa 2013 games</title>
+
+    <style type="text/css">
+        body {
+            text-align: center;
+        }
+
+        table {
+            width: 700px;
+            margin: 0 auto; /* or margin: 0 auto 0 auto */
+            border-width: 1px;
+            border-style: dotted;
+            background-color: #3C312b;
+            color: #fff;
+        }
+
+        td {
+            height: 24px;
+            padding-top: 10px;
+            border-top-width: 1px;
+            border-top-style: dotted;
+            border-color: #fff;
+        }
+    </style>
+
+</head>
+<body>
+    Searched games for player '@Model.Name'
+
+    <table>
+        <thead>
+            <tr>
+                <th>Home</th>
+                <th>Result</th>
+                <th>Away</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in @Model.Games)
+            {
+                <tr>
+                    <td>@game.HomePlayer</td>
+                    <td>@game.Result</td>
+                    <td>@game.AwayPlayer</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
