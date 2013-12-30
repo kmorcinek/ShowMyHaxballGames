@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
-using KMorcinek.ShowMyHaxballGames.ViewModels;
+﻿using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
 
 namespace KMorcinek.ShowMyHaxballGames
 {
@@ -11,7 +8,11 @@ namespace KMorcinek.ShowMyHaxballGames
     {
         public IndexModule()
         {
-            Get["/"] = parameters => View["index"];
+            Get["/"] = _ =>   @"This website make it easier to find the people we haven't played so far (or check all results by a player). 
+                                <br />
+                                Try '/yourName' i.ee '/Marian' or click <a href='/Marian'>/Marian</a>
+                                <br />
+                                Loading takes time (I am not caching, to serve always up to date results).";
 
             Get["/{name}"] = parameters =>
             {
