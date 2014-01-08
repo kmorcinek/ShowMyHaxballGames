@@ -33,9 +33,10 @@
 
 </head>
 <body>
-    Searched games for player '@Model.Name'<br/>
-    
-    <a href="http://www.haxball.gr/league/view/121729" target="_blank">Original Haxball ligue</a>
+    Searched games for player '@Model.Name'<br />
+
+    <a href="http://www.haxball.gr/league/view/121729" target="_blank">Original Haxball ligue</a><br />
+    <a href="#ligue">Jump down to table</a>
 
     <table>
         <thead>
@@ -56,8 +57,7 @@
             }
         </tbody>
     </table>
-    <iframe style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/121729' width='965' height='650'></iframe>
-    
+    <iframe id="ligue" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/121729' width='965' height='650'></iframe>
     <div>Code on <a href="https://github.com/kmorcinek/ShowMyHaxballGames">Github</a></div>
 </body>
 </html>
