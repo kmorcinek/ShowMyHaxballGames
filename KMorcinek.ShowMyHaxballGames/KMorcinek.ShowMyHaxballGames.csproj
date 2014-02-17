@@ -96,6 +96,7 @@
     <Content Include="Views\Games.cshtml" />
     <Content Include="Views\League.cshtml" />
     <Content Include="Views\layout.cshtml" />
+    <Content Include="Views\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

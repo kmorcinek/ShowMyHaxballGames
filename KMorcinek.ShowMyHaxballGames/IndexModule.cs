@@ -1,4 +1,6 @@
-﻿using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
+﻿using System.Collections.Generic;
+using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
+using KMorcinek.ShowMyHaxballGames.ViewModels;
 
 namespace KMorcinek.ShowMyHaxballGames
 {
@@ -8,10 +10,21 @@ namespace KMorcinek.ShowMyHaxballGames
     {
         public IndexModule()
         {
-            Get["/"] = _ => @"This website make it easier to find the people we haven't played so far (or check all results for a player). 
-                                <br />
-                                Try 'yourLeagueId/yourName' i.ee '/121729/Marian' or click <a href='/121729/Marian'>/121729/Marian</a>
-            ";
+            Get["/"] = _ =>
+            {
+                var leagues = new List<LeagueViewModel>();
+                leagues.AddRange(
+                    new[]
+                    {
+                        new LeagueViewModel { LeagueId = 126002, Title = "MW League S02 Div1" },
+                        new LeagueViewModel { LeagueId = 126003, Title = "MW League S02 Div2" },
+                        new LeagueViewModel { LeagueId = 126004, Title = "MW League S02 Div3A" },
+                        new LeagueViewModel { LeagueId = 126005, Title = "MW League S02 Div3B" },
+                        new LeagueViewModel { LeagueId = 121729, Title = "MW League Season 1" },
+                    });
+
+                return View["Index", leagues];
+            };
 
             Get["/{leagueId}"] = parameters =>
             {

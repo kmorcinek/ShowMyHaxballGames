@@ -1,0 +1,28 @@
+﻿@using KMorcinek.ShowMyHaxballGames.ViewModels;
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<System.Collections.Generic.List<LeagueViewModel>>
+
+@{
+    Layout = "layout.cshtml";
+}
+
+@section ScriptRegionTop{
+    <title>Haxball - start</title>
+
+    <style>
+        body {
+            width: 965px;
+            margin: 20px auto;
+        }
+    </style>
+}
+
+This website make it easier to find the people we haven't played so far (or check all results for a player).
+<br />
+<h2>This leagues might interest you:</h2>
+<ul>
+    @foreach (var league in @Model)
+    {
+        <li><a href='/@league.LeagueId'>@league.Title</a></li>
+    }
+</ul>
