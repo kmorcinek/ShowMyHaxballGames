@@ -8,11 +8,10 @@ namespace KMorcinek.ShowMyHaxballGames
     {
         public IndexModule()
         {
-            Get["/"] = _ =>   @"This website make it easier to find the people we haven't played so far (or check all results by a player). 
-                                <br />
-                                Try '/yourName' i.ee '/Marian' or click <a href='/Marian'>/Marian</a>
-                                <br />
-                                Loading takes time (I am not caching, to serve always up to date results).";
+            Get["/"] = _ =>
+            {
+                return View["Index"];
+            };
 
             Get["/{name}"] = parameters =>
             {
