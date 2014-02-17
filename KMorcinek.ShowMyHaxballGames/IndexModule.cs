@@ -19,7 +19,7 @@ namespace KMorcinek.ShowMyHaxballGames
 
                 var leagueViewModelFactory = new LeagueViewModelFactory();
                 var leagueViewModel = leagueViewModelFactory.Create(leagueId);
-                return View["Index", leagueViewModel];
+                return View["League", leagueViewModel];
             };
 
             Get["/{leagueId}/{name}"] = parameters =>
