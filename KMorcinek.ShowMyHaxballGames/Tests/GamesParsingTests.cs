@@ -12,7 +12,8 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
         [Test]
         public void NotPlayedGameTest()
         {
-            const string nodeHtml = @"<div class=""fixture-row"">
+            const string nodeHtml = @"
+                        <div class=""fixture-row"">
                             <div class=""fixture-replay"">
                                 &nbsp;                            </div>
                             <div class=""fixture-home"">Sylwek</div>
@@ -31,7 +32,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                             
                         </div>";
 
-            var doc = GetHtmlDocument(nodeHtml);
+            var doc = HtmlParsingHelper.GetHtmlDocument(nodeHtml);
 
             HtmlNode gameParent = doc.DocumentNode.SelectSingleNode("//div[@class='fixture-row']");
 
@@ -39,14 +40,6 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             Assert.AreEqual("Sylwek", game.HomePlayer);
             Assert.AreEqual("Filip", game.AwayPlayer);
-        }
-
-        private static HtmlDocument GetHtmlDocument(string nodeHtml)
-        {
-            string html = string.Format("<html><head></head><body>{0}</body></html>", nodeHtml);
-            var doc = new HtmlDocument();
-            doc.LoadHtml(html);
-            return doc;
         }
 
         [Test]
@@ -73,7 +66,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                             
                         </div>";
 
-            var doc = GetHtmlDocument(nodeHtml);
+            var doc = HtmlParsingHelper.GetHtmlDocument(nodeHtml);
 
             HtmlNode gameParent = doc.DocumentNode.SelectSingleNode("//div[@class='fixture-row']");
 
@@ -107,7 +100,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                             
                         </div>";
 
-            var doc = GetHtmlDocument(nodeHtml);
+            var doc = HtmlParsingHelper.GetHtmlDocument(nodeHtml);
 
             HtmlNode gameParent = doc.DocumentNode.SelectSingleNode("//div[@class='fixture-row']");
 
@@ -139,7 +132,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                             
                         </div>";
 
-            var doc = GetHtmlDocument(nodeHtml);
+            var doc = HtmlParsingHelper.GetHtmlDocument(nodeHtml);
 
             HtmlNode gameParent = doc.DocumentNode.SelectSingleNode("//div[@class='fixture-row']");
 
@@ -170,7 +163,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
                         </div>";
 
-            var doc = GetHtmlDocument(nodeHtml);
+            var doc = HtmlParsingHelper.GetHtmlDocument(nodeHtml);
 
             HtmlNode gameParent = doc.DocumentNode.SelectSingleNode("//div[@class='fixture-row']");
 

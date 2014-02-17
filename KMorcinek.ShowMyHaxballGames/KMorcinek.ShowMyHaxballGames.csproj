@@ -75,12 +75,16 @@
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Business\GameParser.cs" />
+    <Compile Include="Business\LeagueParser.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\League.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ExploratoryTests.cs" />
     <Compile Include="Tests\GamesParsingTests.cs" />
+    <Compile Include="Tests\HtmlParsingHelper.cs" />
+    <Compile Include="Tests\LeagueParsingTests.cs" />
     <Compile Include="ViewModelFactories\GamesViewModelFactory.cs" />
     <Compile Include="ViewModels\GamesViewModel.cs" />
   </ItemGroup>
