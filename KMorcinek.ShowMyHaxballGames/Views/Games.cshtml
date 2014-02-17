@@ -1,4 +1,5 @@
-﻿@using KMorcinek.ShowMyHaxballGames.ViewModels;
+﻿@using System.Linq
+@using KMorcinek.ShowMyHaxballGames.ViewModels;
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<GamesViewModel>
 
@@ -36,25 +37,38 @@
 Searched games for player '@Model.Name'<br />
 
 <a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
-<a href="#league">Jump down to table</a>
 
-<table>
-    <thead>
-        <tr>
-            <th>Home</th>
-            <th>Result</th>
-            <th>Away</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in @Model.Games)
-        {
+@{
+    var games = @Model.Games.ToArray();
+}
+
+@if (games.Any())
+{
+    <a href="#league">Jump down to table</a>
+    <table>
+        <thead>
             <tr>
-                <td>@game.HomePlayer</td>
-                <td>@game.Result</td>
-                <td>@game.AwayPlayer</td>
+                <th>Home</th>
+                <th>Result</th>
+                <th>Away</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var game in @Model.Games)
+            {
+                <tr>
+                    <td>@game.HomePlayer</td>
+                    <td>@game.Result</td>
+                    <td>@game.AwayPlayer</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div>There are no games for player '@Model.Name'. Probably it's misspelling.</div>
+}
+
+
 <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
