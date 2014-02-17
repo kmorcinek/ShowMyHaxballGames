@@ -2,22 +2,29 @@
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<LeagueViewModel>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Haxball - @Model.Title</title>
-</head>
-<body>
-    This website make it easier to find the people we haven't played so far (or check all results for a player).
-    <br />
-    <h2>Search by player:</h2>
-    <ul>
-        @foreach (var playerName in @Model.Players)
-        {
-            <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
-        }
-    </ul>
+@{
+    Layout = "layout.cshtml";
+}
 
-    <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
-</body>
-</html>
+@section ScriptRegionTop{
+    <title>Haxball - @Model.Title</title>
+
+    <style>
+        body {
+            width: 965px;
+            margin: 20px auto;
+        }
+    </style>
+}
+
+This website make it easier to find the people we haven't played so far (or check all results for a player).
+<br />
+<h2>Search by player:</h2>
+<ul>
+    @foreach (var playerName in @Model.Players)
+    {
+        <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
+    }
+</ul>
+
+<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>

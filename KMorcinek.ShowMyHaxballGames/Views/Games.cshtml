@@ -2,10 +2,11 @@
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<GamesViewModel>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
+@{
+    Layout = "layout.cshtml";
+}
+
+@section ScriptRegionTop{
     <title>Show your Fifa 2013 games</title>
 
     <style type="text/css">
@@ -30,34 +31,30 @@
             border-color: #fff;
         }
     </style>
+}
 
-</head>
-<body>
-    <a href="https://github.com/kmorcinek/ShowMyHaxballGames"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
-    Searched games for player '@Model.Name'<br />
+Searched games for player '@Model.Name'<br />
 
-    <a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
-    <a href="#league">Jump down to table</a>
+<a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
+<a href="#league">Jump down to table</a>
 
-    <table>
-        <thead>
+<table>
+    <thead>
+        <tr>
+            <th>Home</th>
+            <th>Result</th>
+            <th>Away</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in @Model.Games)
+        {
             <tr>
-                <th>Home</th>
-                <th>Result</th>
-                <th>Away</th>
+                <td>@game.HomePlayer</td>
+                <td>@game.Result</td>
+                <td>@game.AwayPlayer</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var game in @Model.Games)
-            {
-                <tr>
-                    <td>@game.HomePlayer</td>
-                    <td>@game.Result</td>
-                    <td>@game.AwayPlayer</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
-</body>
-</html>
+        }
+    </tbody>
+</table>
+<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
