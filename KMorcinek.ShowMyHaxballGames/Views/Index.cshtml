@@ -1,16 +1,23 @@
-﻿<!DOCTYPE html>
+﻿@using KMorcinek.ShowMyHaxballGames.ViewModels;
+
+@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<LeagueViewModel>
+
+<!DOCTYPE html>
 <html>
 <head>
     <title></title>
 </head>
 <body>
-    This website make it easier to find the people we haven't played so far (or check all results by a player).
+    This website make it easier to find the people we haven't played so far (or check all results for a player).
     <br />
-    Try '/yourName' i.ee '/Marian' or click <a href='/Marian'>/Marian</a>
-    <br />
-    Loading takes time (I am not caching, to serve always up to date results).
-    <br />
+    <h2>Search by player:</h2>
+    <ul>
+        @foreach (var playerName in @Model.Players)
+        {
+            <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
+        }
+    </ul>
 
-    <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model' width='965' height='650'></iframe>
+    <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
 </body>
 </html>

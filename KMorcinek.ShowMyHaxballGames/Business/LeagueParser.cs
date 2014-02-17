@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using HtmlAgilityPack;
-using KMorcinek.ShowMyHaxballGames.Models;
+using KMorcinek.ShowMyHaxballGames.ViewModels;
 
 namespace KMorcinek.ShowMyHaxballGames.Business
 {
     public class LeagueParser
     {
-        public League ParseLeague(HtmlNode gameParent)
+        public LeagueViewModel ParseLeague(HtmlNode leagueNode)
         {
-            var htmlNodeCollection = gameParent.SelectNodes("div[@class='standings-row']");
+            var htmlNodeCollection = leagueNode.SelectNodes("div[@class='standings-row']");
             var playerNames = new List<string>();
 
             foreach (var node in htmlNodeCollection)
@@ -17,7 +17,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 playerNames.Add(playerName);
             }
 
-            return new League()
+            return new LeagueViewModel
             {
                 Players = playerNames
             };

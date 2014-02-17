@@ -79,14 +79,15 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\League.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\ExploratoryTests.cs" />
     <Compile Include="Tests\GamesParsingTests.cs" />
     <Compile Include="Tests\HtmlParsingHelper.cs" />
     <Compile Include="Tests\LeagueParsingTests.cs" />
     <Compile Include="ViewModelFactories\GamesViewModelFactory.cs" />
+    <Compile Include="ViewModelFactories\LeagueViewModelFactory.cs" />
     <Compile Include="ViewModels\GamesViewModel.cs" />
+    <Compile Include="ViewModels\LeagueViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

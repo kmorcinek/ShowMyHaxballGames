@@ -8,16 +8,18 @@ namespace KMorcinek.ShowMyHaxballGames
     {
         public IndexModule()
         {
-            Get["/"] = _ => @"This website make it easier to find the people we haven't played so far (or check all results by a player). 
+            Get["/"] = _ => @"This website make it easier to find the people we haven't played so far (or check all results for a player). 
                                 <br />
                                 Try 'yourLeagueId/yourName' i.ee '/121729/Marian' or click <a href='/121729/Marian'>/121729/Marian</a>
-                                <br />
-                                Loading takes time (I am not caching, to serve always up to date results).";
+            ";
 
             Get["/{leagueId}"] = parameters =>
             {
                 var leagueId = int.Parse(parameters.leagueId.Value);
-                return View["Index", leagueId];
+
+                var leagueViewModelFactory = new LeagueViewModelFactory();
+                var leagueViewModel = leagueViewModelFactory.Create(leagueId);
+                return View["Index", leagueViewModel];
             };
 
             Get["/{leagueId}/{name}"] = parameters =>
