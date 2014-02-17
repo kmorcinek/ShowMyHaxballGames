@@ -13,9 +13,9 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
     {
         private readonly GameParser _gameParser = new GameParser();
 
-        public GamesViewModel Create(string name)
+        public GamesViewModel Create(int leagueId, string name)
         {
-                        HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/121729");
+            HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + leagueId);
 //            var document = new HtmlDocument();
 //            document.Load("wholeHaxballPage.htm");
 
@@ -34,6 +34,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 
             var gamesViewModel = new GamesViewModel()
             {
+                LeagueId = leagueId,
                 Name = name,
                 Games = involvedInGames.OrderBy(p => p.Result),
             };

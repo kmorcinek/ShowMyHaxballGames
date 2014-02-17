@@ -16,9 +16,10 @@ namespace KMorcinek.ShowMyHaxballGames
 
             Get["/{name}"] = parameters =>
             {
+                var leagueId = 126004;
                 var name = parameters.name.Value as string;
                 var gamesViewModelFactory = new GamesViewModelFactory();
-                var gamesViewModel = gamesViewModelFactory.Create(name);
+                var gamesViewModel = gamesViewModelFactory.Create(leagueId, name);
                 return View["Games", gamesViewModel];
             };
         }

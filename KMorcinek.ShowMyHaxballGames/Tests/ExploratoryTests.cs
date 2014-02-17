@@ -10,7 +10,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
         public void AgilityTests()
         {
             var gamesViewModelFactory = new GamesViewModelFactory();
-            gamesViewModelFactory.Create("Filip");
+            gamesViewModelFactory.Create(0, "Filip");
         }
     }
 }
