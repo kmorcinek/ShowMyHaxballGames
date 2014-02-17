@@ -76,6 +76,7 @@
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Business\GameParser.cs" />
     <Compile Include="Business\LeagueParser.cs" />
+    <Compile Include="Business\LeagueTitleParser.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Models\Game.cs" />

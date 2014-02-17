@@ -14,7 +14,10 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 
             var someNodes = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
             var leagueViewModel = _leagueParser.ParseLeague(someNodes);
+
             leagueViewModel.LeagueId = leagueId;
+
+            leagueViewModel.Title = LeagueTitleParser.GetLeagueTitle(document);
 
             return leagueViewModel;
         }
