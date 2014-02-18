@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
+using Nancy.Responses;
 
 namespace KMorcinek.ShowMyHaxballGames
 {
@@ -28,7 +29,14 @@ namespace KMorcinek.ShowMyHaxballGames
 
             Get["/{leagueId}"] = parameters =>
             {
-                var leagueId = int.Parse(parameters.leagueId.Value);
+                var unparsedLeagueId = parameters.leagueId.Value;
+
+                int leagueId;
+                if (int.TryParse(unparsedLeagueId, out leagueId) == false)
+                {
+                    // legacy for previous versions
+                    return new RedirectResponse("/121729/" + unparsedLeagueId);
+                }
 
                 var leagueViewModelFactory = new LeagueViewModelFactory();
                 var leagueViewModel = leagueViewModelFactory.Create(leagueId);
