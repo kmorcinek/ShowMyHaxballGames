@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web;
 using System.Web.Caching;
+using KMorcinek.ShowMyHaxballGames.Business;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
@@ -9,7 +10,7 @@ namespace KMorcinek.ShowMyHaxballGames
 {
     public class Bootstrapper : DefaultNancyBootstrapper
     {
-        private static CacheItemRemovedCallback OnCacheRemove = null;
+        private static CacheItemRemovedCallback _onCacheRemove;
         
         // The bootstrapper enables you to reconfigure the composition of the framework,
         // by overriding the various methods and properties.
@@ -17,24 +18,21 @@ namespace KMorcinek.ShowMyHaxballGames
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            AddTask("DoStuff", 60);
-            // your customization goes here
+            AddTask("DoStuff", 20);
         }
 
         private void AddTask(string name, int seconds)
         {
-            OnCacheRemove = new CacheItemRemovedCallback(CacheItemRemoved);
+            _onCacheRemove = CacheItemRemoved;
             HttpRuntime.Cache.Insert(name, seconds, null,
                 DateTime.Now.AddSeconds(seconds), Cache.NoSlidingExpiration,
-                CacheItemPriority.NotRemovable, OnCacheRemove);
+                CacheItemPriority.NotRemovable, _onCacheRemove);
         }
 
         public void CacheItemRemoved(string k, object v, CacheItemRemovedReason r)
         {
+            new LeaguesScheduler().Run();
 
-
-            // do stuff here if it matches our taskname, like WebRequest
-            // re-add our task so it recurs
             AddTask(k, Convert.ToInt32(v));
         }
     }

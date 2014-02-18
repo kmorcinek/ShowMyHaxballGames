@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HtmlAgilityPack;
-using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
 using KMorcinek.ShowMyHaxballGames.Extensions;
@@ -11,28 +9,22 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 {
     public class GamesViewModelFactory
     {
-        private readonly GameParser _gameParser = new GameParser();
-
         public GamesViewModel Create(int leagueId, string name)
         {
-            HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + leagueId);
-//            var document = new HtmlDocument();
-//            document.Load("wholeHaxballPage.htm");
-
-            var someNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
-
             var involvedInGames = new List<Game>();
 
-            foreach (var gameNode in someNodes)
+            var db = DbRepository.GetDb();
+            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+
+            foreach (var game in league.Games)
             {
-                var game = _gameParser.Parse(gameNode);
                 if (game.HomePlayer.Contains(name, StringComparison.CurrentCultureIgnoreCase) || game.AwayPlayer.Contains(name, StringComparison.CurrentCultureIgnoreCase))
                 {
                     involvedInGames.Add(game);
                 }
             }
 
-            var gamesViewModel = new GamesViewModel()
+            var gamesViewModel = new GamesViewModel
             {
                 LeagueId = leagueId,
                 Name = name,

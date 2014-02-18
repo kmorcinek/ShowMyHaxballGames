@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
 using Nancy.Responses;
@@ -14,15 +15,8 @@ namespace KMorcinek.ShowMyHaxballGames
             Get["/"] = _ =>
             {
                 var leagues = new List<LeagueViewModel>();
-                leagues.AddRange(
-                    new[]
-                    {
-                        new LeagueViewModel { LeagueId = 126002, Title = "MW League S02 Div1" },
-                        new LeagueViewModel { LeagueId = 126003, Title = "MW League S02 Div2" },
-                        new LeagueViewModel { LeagueId = 126004, Title = "MW League S02 Div3A" },
-                        new LeagueViewModel { LeagueId = 126005, Title = "MW League S02 Div3B" },
-                        new LeagueViewModel { LeagueId = 121729, Title = "MW League Season 1" },
-                    });
+                var leaguesProvider = new LeaguesProvider();
+                leagues.AddRange(leaguesProvider.Get());
 
                 return View["Index", leagues];
             };
