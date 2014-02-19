@@ -11,3 +11,7 @@ Live examples
 [Choose a player](http://showmyhaxballgames.angelo.hostingasp.pl/121729)
 
 [See a games for current player](http://showmyhaxballgames.angelo.hostingasp.pl/121729/Marian)
+
+Technologies used
+=========
+I learned [Nancy](http://nancyfx.org/) framework better.
