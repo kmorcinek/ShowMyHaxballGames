@@ -14,23 +14,6 @@
         body {
             text-align: center;
         }
-
-        table {
-            width: 700px;
-            margin: 0 auto;
-            border-width: 1px;
-            border-style: dotted;
-            background-color: #3C312b;
-            color: #fff;
-        }
-
-        td {
-            height: 24px;
-            padding-top: 10px;
-            border-top-width: 1px;
-            border-top-style: dotted;
-            border-color: #fff;
-        }
     </style>
 }
 
@@ -54,7 +37,7 @@ Searched games for player '@Model.Name'<br />
             </tr>
         </thead>
         <tbody>
-            @foreach (var game in @Model.Games)
+            @foreach (var game in games)
             {
                 <tr>
                     <td>@game.HomePlayer</td>

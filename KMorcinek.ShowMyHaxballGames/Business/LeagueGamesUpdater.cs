@@ -63,8 +63,6 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                     oldGame.PlayedDate = _timeProvider.GetCurrentTime();
                 }
             }
-
-            league.Games = newGames;
         }
     }
 }

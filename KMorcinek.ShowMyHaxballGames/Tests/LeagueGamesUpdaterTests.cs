@@ -108,6 +108,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             Assert.IsNotNull(league);
             Assert.AreEqual(_currentDate, league.Games[0].PlayedDate);
+            db.EnsureNewDatabase();
         }
 
         [Test]
@@ -128,6 +129,46 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             Assert.IsNotNull(league);
             Assert.AreEqual(null, league.Games[0].PlayedDate);
+            db.DeleteIfExists();
+            db.EnsureNewDatabase();
+        }
+
+        [Test]
+        public void WhenLeagueExistsWithPlayedGamesDatesShouldNotBeUpdated()
+        {
+            var timeProvider = new Mock<ITimeProvider>();
+            timeProvider.Setup(p => p.GetCurrentTime())
+                .Returns(_earlierDate);
+
+            var leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object);
+
+            var db = DbRepository.GetDb();
+            db.EnsureNewDatabase();
+            
+            var previousGames = new List<Game>();
+            previousGames.Add(
+                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
+                );
+
+            var leagueId = 0;
+            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames);
+
+            var newGames = new List<Game>();
+            newGames.Add(
+                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
+                );
+
+            timeProvider.Setup(p => p.GetCurrentTime())
+                .Returns(_currentDate);
+
+            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
+
+            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+
+            Assert.IsNotNull(league);
+            Assert.AreEqual(_earlierDate, league.Games[0].PlayedDate);
+            db.DeleteIfExists();
+            db.EnsureNewDatabase();
         }
     }
 }

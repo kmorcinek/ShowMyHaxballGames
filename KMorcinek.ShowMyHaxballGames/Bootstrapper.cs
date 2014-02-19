@@ -18,7 +18,8 @@ namespace KMorcinek.ShowMyHaxballGames
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
-            AddTask("DoStuff", 20);
+            new LeaguesScheduler().Run();
+            AddTask("DoStuff", 50);
         }
 
         private void AddTask(string name, int seconds)

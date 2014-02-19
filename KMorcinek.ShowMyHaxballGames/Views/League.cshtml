@@ -1,4 +1,6 @@
-﻿@using KMorcinek.ShowMyHaxballGames.ViewModels;
+﻿@using System
+@using System.Linq
+@using KMorcinek.ShowMyHaxballGames.ViewModels;
 
 @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<LeagueViewModel>
 
@@ -26,5 +28,35 @@ This website make it easier to find the people we haven't played so far (or chec
         <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
     }
 </ul>
+
+@{
+    var games = @Model.NewestGames.ToArray();
+}
+
+@if (games.Any())
+{
+    <h2>Last played games</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Home</th>
+                <th>Result</th>
+                <th>Away</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in games)
+            {
+                <tr>
+                    <td>@game.HomePlayer</td>
+                    <td>@game.Result</td>
+                    <td>@game.AwayPlayer</td>
+                    <td>@(game.PlayedDate.Value.ToShortDateString())</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>

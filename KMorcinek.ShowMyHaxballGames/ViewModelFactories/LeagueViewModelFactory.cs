@@ -1,5 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿using System.Linq;
+using HtmlAgilityPack;
 using KMorcinek.ShowMyHaxballGames.Business;
+using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
 
 namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
@@ -18,6 +20,16 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             leagueViewModel.LeagueId = leagueId;
 
             leagueViewModel.Title = LeagueTitleParser.GetLeagueTitle(document);
+
+            var db = DbRepository.GetDb();
+            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+
+            var games = league.Games
+                .OrderByDescending(g => g.PlayedDate)
+                .Take(8)
+                .Where(g => g.Result != Constants.NotPlayed);
+
+            leagueViewModel.NewestGames = games;
 
             return leagueViewModel;
         }
