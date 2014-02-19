@@ -24,11 +24,16 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
                 }
             }
 
+            var notPlayed = involvedInGames.Where(g => g.Result == Constants.NotPlayed);
+            var played = involvedInGames
+                .Where(g => g.Result != Constants.NotPlayed)
+                .OrderByDescending(g => g.PlayedDate);
+
             var gamesViewModel = new GamesViewModel
             {
                 LeagueId = leagueId,
                 Name = name,
-                Games = involvedInGames.OrderBy(p => p.Result),
+                Games = notPlayed.Concat(played)
             };
 
             return gamesViewModel;
