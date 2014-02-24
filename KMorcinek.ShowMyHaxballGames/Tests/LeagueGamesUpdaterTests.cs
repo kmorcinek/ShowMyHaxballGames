@@ -104,7 +104,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             var leagueId = 0;
             _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
 
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             Assert.IsNotNull(league);
             Assert.AreEqual(_currentDate, league.Games[0].PlayedDate);
@@ -125,7 +125,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             var leagueId = 0;
             _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
 
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             Assert.IsNotNull(league);
             Assert.AreEqual(null, league.Games[0].PlayedDate);
@@ -163,7 +163,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
 
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             Assert.IsNotNull(league);
             Assert.AreEqual(_earlierDate, league.Games[0].PlayedDate);

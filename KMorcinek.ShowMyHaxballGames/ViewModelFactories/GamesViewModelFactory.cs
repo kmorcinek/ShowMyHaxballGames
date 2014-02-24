@@ -14,7 +14,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             var involvedInGames = new List<Game>();
 
             var db = DbRepository.GetDb();
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             foreach (var game in league.Games)
             {

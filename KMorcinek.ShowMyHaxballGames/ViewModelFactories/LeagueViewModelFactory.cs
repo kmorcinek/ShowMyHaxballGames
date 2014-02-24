@@ -22,7 +22,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             leagueViewModel.Title = LeagueTitleParser.GetLeagueTitle(document);
 
             var db = DbRepository.GetDb();
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             var games = league.Games
                 .OrderByDescending(g => g.PlayedDate)

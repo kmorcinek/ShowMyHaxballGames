@@ -17,7 +17,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
         public void UpdateLeague(int leagueId, string title, List<Game> newGames)
         {
             var db = DbRepository.GetDb();
-            var league = db.UseOnceTo().Query<League>().Where(t => t.LeagueNumer == leagueId).SingleOrDefault();
+            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
             if (league == null)
             {
