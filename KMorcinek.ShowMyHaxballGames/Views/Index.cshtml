@@ -7,22 +7,37 @@
 }
 
 @section ScriptRegionTop{
-    <title>Haxball - start</title>
+    <title>Fifa 13 at Making Waves</title>
 
     <style>
         body {
             width: 965px;
             margin: 20px auto;
+            text-align: center;
         }
     </style>
 }
 
-This website make it easier to find the people we haven't played so far (or check all results for a player).
-<br />
-<h2>This leagues might interest you:</h2>
-<ul>
-    @foreach (var league in @Model)
-    {
-        <li><a href='/@league.LeagueId'>@league.Title</a></li>
-    }
-</ul>
+<h1>Fifa 13 at Making Waves</h1>
+
+<table class="main">
+    <thead>
+        <tr>
+            <th>Season</th>
+            <th>Status</th>
+            <th>My haxball</th>
+            <th>Direct</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var league in @Model)
+        {
+            <tr>
+                <td>1</td>
+                <td>In progress</td>
+                <td><a href='/@league.LeagueId'>@league.Title</a></td>
+                <td><a href="http://www.haxball.gr/league/view/@league.LeagueId" target="_blank">Original league</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
