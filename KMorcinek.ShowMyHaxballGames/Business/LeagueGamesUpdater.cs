@@ -14,7 +14,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             _timeProvider = timeProvider;
         }
 
-        public void UpdateLeague(int leagueId, string title, List<Game> newGames)
+        public void UpdateLeague(int leagueId, string title, List<Game> newGames, List<string> players)
         {
             var db = DbRepository.GetDb();
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
@@ -25,6 +25,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 {
                     LeagueNumer = leagueId,
                     Title = title,
+                    Players = players,
                     Games = new List<Game>(),
                 };
 
@@ -43,6 +44,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             else
             {
                 UpdateLeague(league, newGames);
+                league.Players = players;
                 db.UseOnceTo().Update(league);
             }
         }

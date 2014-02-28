@@ -33,7 +33,12 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 newGames.Add(game);
             }
 
-            _leagueGamesUpdater.UpdateLeague(leagueId, title, newGames);
+            var leagueParser = new LeagueParser();
+
+            var playersNode = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
+            var players = leagueParser.GetPlayers(playersNode);
+
+            _leagueGamesUpdater.UpdateLeague(leagueId, title, newGames, players);
         }         
     }
 }

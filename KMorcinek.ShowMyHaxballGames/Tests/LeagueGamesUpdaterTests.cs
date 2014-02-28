@@ -95,14 +95,14 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
         {
             var db = DbRepository.GetDb();
             db.EnsureNewDatabase();
-            
+
             var newGames = new List<Game>();
             newGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
                 );
 
             var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
+            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
@@ -116,14 +116,14 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
         {
             var db = DbRepository.GetDb();
             db.EnsureNewDatabase();
-            
+
             var newGames = new List<Game>();
             newGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed }
                 );
 
             var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
+            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
@@ -144,14 +144,14 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var db = DbRepository.GetDb();
             db.EnsureNewDatabase();
-            
+
             var previousGames = new List<Game>();
             previousGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
                 );
 
             var leagueId = 0;
-            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames);
+            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames, null);
 
             var newGames = new List<Game>();
             newGames.Add(
@@ -161,7 +161,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_currentDate);
 
-            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames);
+            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
