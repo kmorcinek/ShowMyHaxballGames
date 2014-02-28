@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using KMorcinek.ShowMyHaxballGames.Business;
+﻿using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
+using Nancy;
 using Nancy.Responses;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace KMorcinek.ShowMyHaxballGames
 {
-    using Nancy;
 
     public class IndexModule : NancyModule
     {
@@ -24,6 +25,10 @@ namespace KMorcinek.ShowMyHaxballGames
                 {
                     leagueViewModels.Add(new LeagueViewModel(league));
                 }
+
+                var goodOrder = new LeaguesProvider().Get().Select(p => p.LeagueId).ToList();
+
+                leagueViewModels = leagueViewModels.OrderBy(d => goodOrder.IndexOf(d.LeagueId)).ToList();
 
                 return View["Index", leagueViewModels];
             };
