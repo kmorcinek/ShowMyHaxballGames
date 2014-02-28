@@ -10,5 +10,6 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
         public int SeasonNumber { get; set; }
         public List<string> Players { get; set; }
         public IEnumerable<Game> NewestGames { get; set; }
+        public Progress Progress { get; set; }
     }
 }
