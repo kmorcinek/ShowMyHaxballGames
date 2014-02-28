@@ -11,7 +11,7 @@ namespace KMorcinek.ShowMyHaxballGames.Factories
             var progress = new Progress
             {
                 Played = league.Games.Count(g => g.Result != Constants.NotPlayed),
-                Total = TotalGamesCalculator.Calculate(league.Players.Count)
+                Total = TotalGamesCalculator.Calculate(league.Players.Count(FakePlayersHelper.IsNotFake))
             };
 
             return progress;

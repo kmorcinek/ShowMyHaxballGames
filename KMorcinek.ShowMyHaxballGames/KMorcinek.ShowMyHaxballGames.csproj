@@ -135,6 +135,7 @@
     <Compile Include="Tests\HtmlParsingHelper.cs" />
     <Compile Include="Tests\LeagueGamesUpdaterTests.cs" />
     <Compile Include="Tests\LeagueParsingTests.cs" />
+    <Compile Include="Utils\FakePlayersHelper.cs" />
     <Compile Include="Utils\ITimeProvider.cs" />
     <Compile Include="Utils\RealTimeProvider.cs" />
     <Compile Include="Utils\TotalGamesCalculator.cs" />

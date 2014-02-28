@@ -31,7 +31,8 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             foreach (var gameNode in gamesNodes)
             {
                 var game = _gameParser.Parse(gameNode);
-                newGames.Add(game);
+                if (FakePlayersHelper.IsNotFake(game.HomePlayer) && FakePlayersHelper.IsNotFake(game.AwayPlayer))
+                    newGames.Add(game);
             }
 
             var leagueParser = new LeagueParser();
