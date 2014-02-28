@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 
@@ -8,10 +9,12 @@ namespace KMorcinek.ShowMyHaxballGames.Business
     public class LeagueGamesUpdater
     {
         private readonly ITimeProvider _timeProvider;
+        private readonly ProgressFactory _progressFactory;
 
         public LeagueGamesUpdater(ITimeProvider timeProvider)
         {
             _timeProvider = timeProvider;
+            _progressFactory = new ProgressFactory();
         }
 
         public void UpdateLeague(int leagueId, string title, List<Game> newGames, List<string> players)
@@ -39,12 +42,17 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                     league.Games.Add(gameCopy);
                 }
 
+                league.Progress = _progressFactory.Create(league);
+
                 db.UseOnceTo().Insert(league);
             }
             else
             {
                 UpdateLeague(league, newGames);
+                
                 league.Players = players;
+                league.Progress = _progressFactory.Create(league);
+
                 db.UseOnceTo().Update(league);
             }
         }

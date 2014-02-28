@@ -122,6 +122,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="DbRepository.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Factories\ProgressFactory.cs" />
     <Compile Include="IndexModule.cs" />
     <Compile Include="Business\LeaguesProvider.cs" />
     <Compile Include="Business\LeaguesScheduler.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Tests\LeagueParsingTests.cs" />
     <Compile Include="Utils\ITimeProvider.cs" />
     <Compile Include="Utils\RealTimeProvider.cs" />
+    <Compile Include="Utils\TotalGamesCalculator.cs" />
     <Compile Include="ViewModelFactories\GamesViewModelFactory.cs" />
     <Compile Include="ViewModelFactories\LeagueViewModelFactory.cs" />
     <Compile Include="ViewModels\GamesViewModel.cs" />

@@ -11,5 +11,18 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
         public List<string> Players { get; set; }
         public IEnumerable<Game> NewestGames { get; set; }
         public Progress Progress { get; set; }
+
+        public LeagueViewModel()
+        {
+        }
+
+        public LeagueViewModel(League league)
+        {
+            LeagueId = league.LeagueNumer;
+            Title = league.Title;
+            SeasonNumber = 444;
+            //            Players = league.Players;
+            Progress = league.Progress;
+        }
     }
 }

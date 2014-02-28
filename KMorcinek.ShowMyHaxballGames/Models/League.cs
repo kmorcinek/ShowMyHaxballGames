@@ -8,6 +8,7 @@ namespace KMorcinek.ShowMyHaxballGames.Models
         public int LeagueNumer { get; set; }
         public string Title { get; set; }
         public List<string> Players { get; set; }
-        public List<Game> Games { get; set; } 
+        public List<Game> Games { get; set; }
+        public Progress Progress { get; set; }
     }
 }
