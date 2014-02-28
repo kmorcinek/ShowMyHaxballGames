@@ -20,8 +20,8 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
         {
             LeagueId = league.LeagueNumer;
             Title = league.Title;
-            SeasonNumber = 444;
-            //            Players = league.Players;
+            SeasonNumber = league.SeasonNumber;
+            Players = league.Players;
             Progress = league.Progress;
         }
     }

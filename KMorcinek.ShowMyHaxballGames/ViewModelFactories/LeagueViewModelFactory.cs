@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using HtmlAgilityPack;
-using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.ViewModels;
 
@@ -12,8 +10,6 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 
         public LeagueViewModel Create(int leagueId)
         {
-            HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + leagueId);
-
             var db = DbRepository.GetDb();
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
@@ -25,7 +21,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             var leagueViewModel = new LeagueViewModel
             {
                 LeagueId = leagueId,
-                Title = LeagueTitleParser.GetLeagueTitle(document),
+                Title = league.Title,
                 Players = league.Players,
                 NewestGames = games
             };

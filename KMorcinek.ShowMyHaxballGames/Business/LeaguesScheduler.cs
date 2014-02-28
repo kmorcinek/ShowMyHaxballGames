@@ -15,11 +15,11 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             var leaguesProvider = new LeaguesProvider();
             foreach (var league in leaguesProvider.Get())
             {
-                RunLeague(league.LeagueId, league.Title);
+                RunLeague(league.LeagueId);
             }
         }
 
-        private void RunLeague(int leagueId, string title)
+        private void RunLeague(int leagueId)
         {
             HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + leagueId);
 
@@ -37,6 +37,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
             var playersNode = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
             var players = leagueParser.GetPlayers(playersNode);
+            var title = LeagueTitleParser.GetLeagueTitle(document);
 
             _leagueGamesUpdater.UpdateLeague(leagueId, title, newGames, players);
         }         
