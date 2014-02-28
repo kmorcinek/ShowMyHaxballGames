@@ -16,11 +16,14 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + leagueId);
 
             var someNodes = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
-            var leagueViewModel = _leagueParser.ParseLeague(someNodes);
-
-            leagueViewModel.LeagueId = leagueId;
-
-            leagueViewModel.Title = LeagueTitleParser.GetLeagueTitle(document);
+            var players = _leagueParser.GetPlayers(someNodes);
+            
+            var leagueViewModel = new LeagueViewModel
+            {
+                Players = players,
+                LeagueId = leagueId,
+                Title = LeagueTitleParser.GetLeagueTitle(document)
+            };
 
             var db = DbRepository.GetDb();
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);

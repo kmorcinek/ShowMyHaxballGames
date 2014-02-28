@@ -59,10 +59,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             HtmlNode parent = doc.DocumentNode.SelectSingleNode("//div[@id='standings']");
 
-            var league = _leagueParser.ParseLeague(parent);
+            var players = _leagueParser.GetPlayers(parent);
 
-            Assert.AreEqual("Anders", league.Players[0]);
-            Assert.AreEqual("TomekM", league.Players[1]);
+            Assert.AreEqual("Anders", players[0]);
+            Assert.AreEqual("TomekM", players[1]);
         }
     }
 }
