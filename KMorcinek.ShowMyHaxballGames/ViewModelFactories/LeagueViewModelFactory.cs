@@ -8,6 +8,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 {
     public class LeagueViewModelFactory
     {
+        private const int ShownLastGamesCount = 8;
         private readonly LeagueParser _leagueParser = new LeagueParser();
 
         public LeagueViewModel Create(int leagueId)
@@ -26,7 +27,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 
             var games = league.Games
                 .OrderByDescending(g => g.PlayedDate)
-                .Take(8)
+                .Take(ShownLastGamesCount)
                 .Where(g => g.Result != Constants.NotPlayed);
 
             leagueViewModel.NewestGames = games;
