@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using KMorcinek.ShowMyHaxballGames.Business;
+using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 using Moq;
@@ -14,6 +15,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
         private readonly DateTime _earlierDate = new DateTime(2013, 1, 1);
         private readonly DateTime _currentDate = new DateTime(2014, 5, 5);
         private readonly LeagueGamesUpdater _leagueGamesScheduler;
+        private readonly Mock<ProgressFactory> _progressFactoryMock;
 
         public LeagueGamesUpdaterTests()
         {
@@ -21,7 +23,11 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_currentDate);
 
-            _leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object);
+            _progressFactoryMock = new Mock<ProgressFactory>();
+            _progressFactoryMock.Setup(p => p.Create(It.IsAny<League>()))
+                .Returns(new Progress());
+
+            _leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object);
         }
 
         [Test]
@@ -140,7 +146,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_earlierDate);
 
-            var leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object);
+            var leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object);
 
             var db = DbRepository.GetDb();
             db.EnsureNewDatabase();

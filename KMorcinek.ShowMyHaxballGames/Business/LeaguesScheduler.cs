@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HtmlAgilityPack;
+using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 
@@ -8,7 +9,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
     public class LeaguesScheduler
     {
         private readonly GameParser _gameParser = new GameParser();
-        private readonly LeagueGamesUpdater _leagueGamesUpdater = new LeagueGamesUpdater(new RealTimeProvider());
+        private readonly LeagueGamesUpdater _leagueGamesUpdater = new LeagueGamesUpdater(new RealTimeProvider(), new ProgressFactory());
 
         public void Run()
         {

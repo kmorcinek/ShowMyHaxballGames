@@ -11,10 +11,10 @@ namespace KMorcinek.ShowMyHaxballGames.Business
         private readonly ITimeProvider _timeProvider;
         private readonly ProgressFactory _progressFactory;
 
-        public LeagueGamesUpdater(ITimeProvider timeProvider)
+        public LeagueGamesUpdater(ITimeProvider timeProvider, ProgressFactory progressFactory)
         {
             _timeProvider = timeProvider;
-            _progressFactory = new ProgressFactory();
+            _progressFactory = progressFactory;
         }
 
         public void UpdateLeague(int leagueId, string title, List<Game> newGames, List<string> players)

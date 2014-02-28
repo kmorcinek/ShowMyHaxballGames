@@ -5,7 +5,7 @@ namespace KMorcinek.ShowMyHaxballGames.Factories
 {
     public class ProgressFactory
     {
-        public Progress Create(League league)
+        public virtual Progress Create(League league)
         {
             var progress = new Progress
             {
