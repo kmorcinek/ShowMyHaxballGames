@@ -6,11 +6,11 @@ www.haxball.gr/ does not show games played for particular player (i.e. me). This
 Live examples
 ==================
 
-[Choose a league](http://showmyhaxballgames.angelo.hostingasp.pl/)
+[Choose a league](http://haxball.krzysztofmorcinek.com/)
 
-[Choose a player](http://showmyhaxballgames.angelo.hostingasp.pl/121729)
+[Choose a player](http://haxball.krzysztofmorcinek.com/121729)
 
-[See a games for current player](http://showmyhaxballgames.angelo.hostingasp.pl/121729/Marian)
+[See a games for current player](http://haxball.krzysztofmorcinek.com/121729/Marian)
 
 Technologies used
 =========
