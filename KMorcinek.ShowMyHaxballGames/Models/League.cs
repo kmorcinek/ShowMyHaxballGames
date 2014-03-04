@@ -11,5 +11,6 @@ namespace KMorcinek.ShowMyHaxballGames.Models
         public List<string> Players { get; set; }
         public List<Game> Games { get; set; }
         public Progress Progress { get; set; }
+        public string Winner { get; set; }
     }
 }

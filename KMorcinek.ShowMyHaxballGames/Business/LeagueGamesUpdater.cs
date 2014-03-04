@@ -17,7 +17,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             _progressFactory = progressFactory;
         }
 
-        public void UpdateLeague(int leagueId, string title, List<Game> newGames, List<string> players, int seasonNumber)
+        public void UpdateLeague(int leagueId, string title, List<Game> newGames, List<string> players, int seasonNumber, string winner)
         {
             var db = DbRepository.GetDb();
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
@@ -31,6 +31,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                     Title = title,
                     Players = players,
                     Games = new List<Game>(),
+                    Winner = winner,
                 };
 
                 foreach (var newGame in newGames)
@@ -54,6 +55,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 league.SeasonNumber = seasonNumber;
                 league.Players = players;
                 league.Progress = _progressFactory.Create(league);
+                league.Winner = winner;
 
                 db.UseOnceTo().Update(league);
             }

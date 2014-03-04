@@ -40,8 +40,9 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             var playersNode = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
             var players = leagueParser.GetPlayers(playersNode);
             var title = LeagueTitleParser.GetLeagueTitle(document);
+            var winner = leagueParser.GetWinner(document.DocumentNode);
 
-            _leagueGamesUpdater.UpdateLeague(leagueId, title, newGames, players, seasonNumber);
+            _leagueGamesUpdater.UpdateLeague(leagueId, title, newGames, players, seasonNumber, winner);
         }         
     }
 }

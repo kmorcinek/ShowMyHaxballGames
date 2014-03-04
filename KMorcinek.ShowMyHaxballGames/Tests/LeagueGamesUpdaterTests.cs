@@ -108,7 +108,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                 );
 
             var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0);
+            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
@@ -129,7 +129,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                 );
 
             var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0);
+            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
@@ -157,7 +157,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
                 );
 
             var leagueId = 0;
-            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames, null, 0);
+            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames, null, 0, null);
 
             var newGames = new List<Game>();
             newGames.Add(
@@ -167,7 +167,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_currentDate);
 
-            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0);
+            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
