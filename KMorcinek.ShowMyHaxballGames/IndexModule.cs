@@ -26,7 +26,7 @@ namespace KMorcinek.ShowMyHaxballGames
                     leagueViewModels.Add(new LeagueViewModel(league));
                 }
 
-                var goodOrder = new LeaguesProvider().Get().Select(p => p.LeagueId).ToList();
+                var goodOrder = new LeaguesProvider().Get().Select(p => p.LeagueNumer).ToList();
 
                 leagueViewModels = leagueViewModels.OrderBy(d => goodOrder.IndexOf(d.LeagueId)).ToList();
 

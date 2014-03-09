@@ -16,7 +16,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             var leaguesProvider = new LeaguesProvider();
             foreach (var league in leaguesProvider.Get())
             {
-                RunLeague(league.LeagueId, league.SeasonNumber);
+                RunLeague(league.LeagueNumer, league.SeasonNumber);
             }
         }
 
