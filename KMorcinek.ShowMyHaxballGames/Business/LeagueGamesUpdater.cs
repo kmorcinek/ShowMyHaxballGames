@@ -71,8 +71,10 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
                 if (matchingNewGame != null && matchingNewGame.Result != Constants.NotPlayed)
                 {
+                    if (oldGame.Result == Constants.NotPlayed)
+                        oldGame.PlayedDate = _timeProvider.GetCurrentTime();    
+
                     oldGame.Result = matchingNewGame.Result;
-                    oldGame.PlayedDate = _timeProvider.GetCurrentTime();
                 }
             }
         }
