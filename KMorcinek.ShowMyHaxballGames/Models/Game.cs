@@ -9,7 +9,7 @@ namespace KMorcinek.ShowMyHaxballGames.Models
         public string Result { get; set; }
         public DateTime? PlayedDate { get; set; }
 
-        public Game GetDeepCopy()
+        public Game CreateDeepCopy()
         {
             var game = new Game
             {

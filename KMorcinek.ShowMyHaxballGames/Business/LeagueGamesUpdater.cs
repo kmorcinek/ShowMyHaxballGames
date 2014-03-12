@@ -36,7 +36,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
                 foreach (var newGame in newGames)
                 {
-                    var gameCopy = newGame.GetDeepCopy();
+                    var gameCopy = newGame.CreateDeepCopy();
 
                     if (newGame.Result != Constants.NotPlayed)
                         gameCopy.PlayedDate = _timeProvider.GetCurrentTime();
@@ -63,9 +63,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
         public void UpdateLeague(League league, List<Game> newGames)
         {
-            var notPlayedOldGames = league.Games.Where(g => g.Result == Constants.NotPlayed);
-
-            foreach (var oldGame in notPlayedOldGames)
+            foreach (var oldGame in league.Games)
             {
                 var matchingNewGame =
                     newGames.SingleOrDefault(
