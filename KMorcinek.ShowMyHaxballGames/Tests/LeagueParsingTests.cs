@@ -1,15 +1,14 @@
 ﻿using HtmlAgilityPack;
 using KMorcinek.ShowMyHaxballGames.Business;
-using NUnit.Framework;
+using Xunit;
 
 namespace KMorcinek.ShowMyHaxballGames.Tests
 {
-    [TestFixture]
     public class LeagueParsingTests
     {
         private readonly LeagueParser _leagueParser = new LeagueParser();
 
-        [Test]
+        [Fact]
         public void GetNamesTest()
         {
             const string standingsNode = @"
@@ -61,8 +60,8 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var players = _leagueParser.GetPlayers(parent);
 
-            Assert.AreEqual("Anders", players[0]);
-            Assert.AreEqual("TomekM", players[1]);
+            Assert.Equal("Anders", players[0]);
+            Assert.Equal("TomekM", players[1]);
         }
     }
 }

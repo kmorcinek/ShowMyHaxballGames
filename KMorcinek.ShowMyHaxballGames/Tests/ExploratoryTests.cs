@@ -1,13 +1,12 @@
 using KMorcinek.ShowMyHaxballGames.ViewModelFactories;
-using NUnit.Framework;
+using Xunit;
 
 namespace KMorcinek.ShowMyHaxballGames.Tests
 {
-    [TestFixture]
     public class ExploratoryTests
     {
-        [Test]
-        public void AgilityTests()
+        [Fact(Skip = "Exploratory Test")]
+        public void ExploratoryTest()
         {
             var gamesViewModelFactory = new GamesViewModelFactory();
             gamesViewModelFactory.Create(0, "Filip");

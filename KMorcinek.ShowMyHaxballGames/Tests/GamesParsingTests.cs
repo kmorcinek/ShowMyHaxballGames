@@ -1,15 +1,14 @@
 ﻿using HtmlAgilityPack;
 using KMorcinek.ShowMyHaxballGames.Business;
-using NUnit.Framework;
+using Xunit;
 
 namespace KMorcinek.ShowMyHaxballGames.Tests
 {
-    [TestFixture]
     public class GamesParsingTests
     {
         private readonly GameParser _gameParser = new GameParser();
 
-        [Test]
+        [Fact]
         public void NotPlayedGameTest()
         {
             const string nodeHtml = @"
@@ -38,11 +37,11 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var game = _gameParser.Parse(gameParent);
 
-            Assert.AreEqual("Sylwek", game.HomePlayer);
-            Assert.AreEqual("Filip", game.AwayPlayer);
+            Assert.Equal("Sylwek", game.HomePlayer);
+            Assert.Equal("Filip", game.AwayPlayer);
         }
 
-        [Test]
+        [Fact]
         public void AlreadyPlayedHomeWonGameTest()
         {
             const string nodeHtml = @"<div class=""fixture-row"">
@@ -72,11 +71,11 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var game = _gameParser.Parse(gameParent);
 
-            Assert.AreEqual("Marian", game.HomePlayer);
-            Assert.AreEqual("Derk", game.AwayPlayer);
+            Assert.Equal("Marian", game.HomePlayer);
+            Assert.Equal("Derk", game.AwayPlayer);
         }
 
-        [Test]
+        [Fact]
         public void AlreadyPlayedAwayWonGameTest()
         {
             const string nodeHtml = @"<div class=""fixture-row"">
@@ -106,11 +105,11 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var game = _gameParser.Parse(gameParent);
 
-            Assert.AreEqual("Filip", game.HomePlayer);
-            Assert.AreEqual("Marian", game.AwayPlayer);
+            Assert.Equal("Filip", game.HomePlayer);
+            Assert.Equal("Marian", game.AwayPlayer);
         }
 
-        [Test]
+        [Fact]
         public void NotPlayedGameResultTest()
         {
             const string nodeHtml = @"<div class=""fixture-row"">
@@ -138,10 +137,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var game = _gameParser.Parse(gameParent);
 
-            Assert.AreEqual("-", game.Result);
+            Assert.Equal("-", game.Result);
         }
 
-        [Test]
+        [Fact]
         public void AlreadyPlayedGameResultTest()
         {
             const string nodeHtml = @"<div class=""fixture-row"">
@@ -169,7 +168,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var game = _gameParser.Parse(gameParent);
 
-            Assert.AreEqual("0 - 4", game.Result);
+            Assert.Equal("0 - 4", game.Result);
         }
     }
 }

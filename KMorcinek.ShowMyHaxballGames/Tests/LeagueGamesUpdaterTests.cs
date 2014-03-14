@@ -5,11 +5,10 @@ using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace KMorcinek.ShowMyHaxballGames.Tests
 {
-    [TestFixture]
     public class LeagueGamesUpdaterTests
     {
         private readonly DateTime _earlierDate = new DateTime(2013, 1, 1);
@@ -30,7 +29,7 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             _leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object);
         }
 
-        [Test]
+        [Fact]
         public void NotPlayedGameIsPlayedAndGetCurrentDate()
         {
             var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed, PlayedDate = null };
@@ -49,10 +48,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             _leagueGamesScheduler.UpdateLeague(league, newGames);
 
-            Assert.AreEqual(_currentDate, oldGame.PlayedDate);
+            Assert.Equal(_currentDate, oldGame.PlayedDate);
         }
 
-        [Test]
+        [Fact]
         public void NotPlayedGameIsStillNotPlayedAndDateDoesNotChange()
         {
             var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed, PlayedDate = null };
@@ -71,10 +70,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             _leagueGamesScheduler.UpdateLeague(league, newGames);
 
-            Assert.AreEqual(null, oldGame.PlayedDate);
+            Assert.Equal(null, oldGame.PlayedDate);
         }
 
-        [Test]
+        [Fact]
         public void AlreadyPlayedGameDoesNotUpdateItsDate()
         {
             var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1", PlayedDate = _earlierDate };
@@ -93,10 +92,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             _leagueGamesScheduler.UpdateLeague(league, newGames);
 
-            Assert.AreEqual(_earlierDate, oldGame.PlayedDate);
+            Assert.Equal(_earlierDate, oldGame.PlayedDate);
         }
 
-        [Test]
+        [Fact]
         public void WhenLeagueDoesNotExistsNewPlayedGamesAreSetToCurrentDate()
         {
             var db = DbRepository.GetDb();
@@ -112,12 +111,12 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
-            Assert.IsNotNull(league);
-            Assert.AreEqual(_currentDate, league.Games[0].PlayedDate);
+            Assert.NotNull(league);
+            Assert.Equal(_currentDate, league.Games[0].PlayedDate);
             db.EnsureNewDatabase();
         }
 
-        [Test]
+        [Fact]
         public void WhenLeagueDoesNotExistsNotPlayedGamesAreNotSet()
         {
             var db = DbRepository.GetDb();
@@ -133,13 +132,13 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
 
-            Assert.IsNotNull(league);
-            Assert.AreEqual(null, league.Games[0].PlayedDate);
+            Assert.NotNull(league);
+            Assert.Equal(null, league.Games[0].PlayedDate);
             db.DeleteIfExists();
             db.EnsureNewDatabase();
         }
 
-        [Test]
+        [Fact]
         public void WhenLeagueExistsWithPlayedGamesDatesShouldNotBeUpdated()
         {
             var timeProvider = new Mock<ITimeProvider>();
@@ -170,9 +169,9 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, 0, null);
 
             var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
-
-            Assert.IsNotNull(league);
-            Assert.AreEqual(_earlierDate, league.Games[0].PlayedDate);
+            
+            Assert.NotNull(league);
+            Assert.Equal(_earlierDate, league.Games[0].PlayedDate);
             db.DeleteIfExists();
             db.EnsureNewDatabase();
         }
