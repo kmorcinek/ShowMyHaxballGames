@@ -10,7 +10,6 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
         public int SeasonNumber { get; set; }
         public List<string> Players { get; set; }
         public IEnumerable<Game> NewestGames { get; set; }
-        public Progress Progress { get; set; }
         public string Winner { get; set; }
         public string WrittenProgress { get; set; }
 
@@ -24,7 +23,6 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
             Title = league.Title;
             SeasonNumber = league.SeasonNumber;
             Players = league.Players;
-            Progress = league.Progress;
             Winner = league.Winner;
             WrittenProgress = league.Progress.Played >= league.Progress.Total 
                 ? "Finished" 
