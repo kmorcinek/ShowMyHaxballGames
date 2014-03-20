@@ -33,26 +33,19 @@ namespace KMorcinek.ShowMyHaxballGames
                 return View["Index", leagueViewModels];
             };
 
-            Get["/{leagueId}"] = _ =>
+            Get["/{leagueId:int}"] = _ =>
             {
-                var unparsedLeagueId = _.leagueId.Value;
-
-                int leagueId;
-                if (int.TryParse(unparsedLeagueId, out leagueId) == false)
-                {
-                    // legacy for previous versions
-                    return new RedirectResponse("/121729/" + unparsedLeagueId);
-                }
+                var leagueId = (int)_.leagueId.Value;
 
                 var leagueViewModelFactory = new LeagueViewModelFactory();
                 var leagueViewModel = leagueViewModelFactory.Create(leagueId);
                 return View["League", leagueViewModel];
             };
 
-            Get["/{leagueId}/{name}"] = _ =>
+            Get["/{leagueId:int}/{name}"] = _ =>
             {
-                var leagueId = int.Parse(_.leagueId.Value);
-                var name = _.name.Value as string;
+                var leagueId = (int) _.leagueId.Value;
+                var name = (string)_.name.Value;
                 var gamesViewModelFactory = new GamesViewModelFactory();
                 var gamesViewModel = gamesViewModelFactory.Create(leagueId, name);
                 return View["Games", gamesViewModel];
