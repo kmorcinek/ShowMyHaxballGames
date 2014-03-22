@@ -6,7 +6,7 @@ namespace KMorcinek.ShowMyHaxballGames.Utils
     {
         public DateTime GetCurrentTime()
         {
-            return DateTime.Now;
+            return DateTime.UtcNow;
         }
     }
 }
