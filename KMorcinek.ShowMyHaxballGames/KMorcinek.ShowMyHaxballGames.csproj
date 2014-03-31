@@ -162,7 +162,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Properties\PublishProfiles\showmyhaxballgames.angelo.hostingasp.pl - Web Deploy.pubxml" />
     <Content Include="Views\Games.cshtml" />
     <Content Include="Views\League.cshtml" />
     <Content Include="Views\layout.cshtml" />
