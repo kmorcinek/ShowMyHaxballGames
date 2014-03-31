@@ -56,4 +56,10 @@ Find the people you haven't played so far (or check all results for a player).
     </table>
 }
 
-<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
+<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='530'></iframe>
+
+@{
+    var src = string.Format("/Content/images/{0}.png", Model.Title);
+}
+
+<img src="@src" />
