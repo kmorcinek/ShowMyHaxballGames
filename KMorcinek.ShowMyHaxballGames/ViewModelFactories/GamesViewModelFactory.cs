@@ -32,6 +32,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             var gamesViewModel = new GamesViewModel
             {
                 LeagueId = leagueId,
+                LeagueTitle = league.Title,
                 Name = name,
                 Games = notPlayed.Concat(played)
             };

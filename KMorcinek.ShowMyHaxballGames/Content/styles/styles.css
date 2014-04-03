@@ -1,0 +1,79 @@
+﻿body {
+    background-color: #939E7F;
+    width: 965px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+div.center-container {
+    text-align: center;
+}
+
+table {
+    width: 700px;
+    margin: 0 auto;
+    border-width: 1px;
+    border-style: dotted;
+    text-align: center;
+}
+
+    table.scores {
+        background-color: #3C312b;
+        color: #fff;
+    }
+
+td {
+    height: 24px;
+    padding-top: 10px;
+    border-top-width: 1px;
+    border-top-style: dotted;
+}
+
+.main td {
+    border-color: gray;
+}
+
+.scores td {
+    border-color: #fff;
+}
+
+.breadcrumb {
+    padding-left: 0;
+    list-style: none;
+    text-transform: uppercase;
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+    .breadcrumb li {
+        font-size: 11px;
+        float: left;
+        display: inline;
+        padding-right: 8px;
+        padding-top: 9px;
+        padding-bottom: 9px;
+    }
+
+    .breadcrumb .with-arrow:after {
+        content: "";
+        display: inline-block;
+        background-image: url("/Content/styles/images/icons/bc-arr-black.png");
+        width: 12px;
+        height: 7px;
+        font-size: 1.25em;
+        margin-left: .625em;
+    }
+
+a:link, a.link {
+    text-decoration: none;
+}
+
+.breadcrumb a:hover, a.hover, a:active, a.active {
+    text-decoration: underline;
+}

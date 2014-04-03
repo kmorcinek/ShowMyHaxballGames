@@ -7,51 +7,46 @@
 }
 
 @section ScriptRegionTop{
-    <style>
-        body {
-            width: 965px;
-            margin: 20px auto;
-            text-align: center;
-        }
-    </style>
 }
 
-<h1>EA SPORTS FIFA @@ Making Waves</h1>
+<div class="container center-container">
+    <h1>EA SPORTS FIFA @@ Making Waves</h1>
 
-<table class="main">
-    <thead>
-        <tr>
-            <th>Season</th>
-            <th>Status</th>
-            <th>My haxball</th>
-            <th>Direct</th>
-            <th>Winner</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var league in @Model)
-        {
+    <table class="main">
+        <thead>
             <tr>
-                <td>@league.SeasonNumber</td>
-                <td>@league.WrittenProgress</td>
-                <td><a href='/@league.LeagueId'>@league.Title</a></td>
-                <td><a href="http://www.haxball.gr/league/view/@league.LeagueId" target="_blank">Original league</a></td>
-                <td>@league.Winner</td>
+                <th>Season</th>
+                <th>Status</th>
+                <th>My haxball</th>
+                <th>Direct</th>
+                <th>Winner</th>
             </tr>
-        }
-        <tr>
-            <td>Tournament</td>
-            <td>II 2014</td>
-            <td></td>
-            <td><a href="http://challonge.com/mwtorunament/scoreboard">Challonge</a></td>
-            <td>Piotr Szczygieł</td>
-        </tr>
-        <tr>
-            <td>Tournament</td>
-            <td>XI 2013</td>
-            <td></td>
-            <td><a href="http://www.konkuri.com/tournaments/2d62a48eee">Konkuri</a></td>
-            <td>Mati</td>
-        </tr>
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var league in @Model)
+            {
+                <tr>
+                    <td>@league.SeasonNumber</td>
+                    <td>@league.WrittenProgress</td>
+                    <td><a href='/@league.LeagueId'>@league.Title</a></td>
+                    <td><a href="http://www.haxball.gr/league/view/@league.LeagueId" target="_blank">Original league</a></td>
+                    <td>@league.Winner</td>
+                </tr>
+            }
+            <tr>
+                <td>Tournament</td>
+                <td>II 2014</td>
+                <td></td>
+                <td><a href="http://challonge.com/mwtorunament/scoreboard">Challonge</a></td>
+                <td>Piotr Szczygieł</td>
+            </tr>
+            <tr>
+                <td>Tournament</td>
+                <td>XI 2013</td>
+                <td></td>
+                <td><a href="http://www.konkuri.com/tournaments/2d62a48eee">Konkuri</a></td>
+                <td>Mati</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

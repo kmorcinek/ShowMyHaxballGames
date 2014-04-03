@@ -8,53 +8,53 @@
 }
 
 @section ScriptRegionTop{
-    <style>
-        body {
-            width: 965px;
-            margin: 20px auto;
+}
+
+<div class="container">
+    <ul class="breadcrumb">
+        <li class="with-arrow"><a href="/">Home</a></li>
+        <li><span class="active">@Model.Title</span></li>
+    </ul>
+
+    <br />
+    <h2>Search by player:</h2>
+    <ul>
+        @foreach (var playerName in @Model.Players)
+        {
+            <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
         }
-    </style>
-}
+    </ul>
 
-Find the people you haven't played so far (or check all results for a player).
-<br />
-<h2>Search by player:</h2>
-<ul>
-    @foreach (var playerName in @Model.Players)
-    {
-        <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
+    @{
+        var games = @Model.NewestGames.ToArray();
     }
-</ul>
 
-@{
-    var games = @Model.NewestGames.ToArray();
-}
-
-@if (games.Any())
-{
-    <h2>Last played games</h2>
-    <table class="scores">
-        <thead>
-            <tr>
-                <th>Home</th>
-                <th>Result</th>
-                <th>Away</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var game in games)
-            {
+    @if (games.Any())
+    {
+        <h2>Last played games</h2>
+        <table class="scores">
+            <thead>
                 <tr>
-                    <td>@game.HomePlayer</td>
-                    <td>@game.Result</td>
-                    <td>@game.AwayPlayer</td>
-                    <td>@(game.PlayedDate.Value.ToShortDateString())</td>
+                    <th>Home</th>
+                    <th>Result</th>
+                    <th>Away</th>
+                    <th>Date</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var game in games)
+                {
+                    <tr>
+                        <td>@game.HomePlayer</td>
+                        <td>@game.Result</td>
+                        <td>@game.AwayPlayer</td>
+                        <td>@(game.PlayedDate.Value.ToShortDateString())</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
 <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='530'></iframe>
 

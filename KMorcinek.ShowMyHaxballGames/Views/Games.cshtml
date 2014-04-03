@@ -8,48 +8,51 @@
 }
 
 @section ScriptRegionTop{
-    <style type="text/css">
-        body {
-            text-align: center;
-        }
-    </style>
 }
 
-Searched games for player '@Model.Name'<br />
+<div class="container center-container">
+    <ul class="breadcrumb">
+        <li class="with-arrow"><a href="/">Home</a></li>
+        <li class="with-arrow"><a href="/@Model.LeagueId/">@Model.LeagueTitle</a></li>
+        <li><span class="active">@Model.Name</span></li>
+    </ul>
 
-<a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
+    @*Searched games for player '@Model.Name'<br />*@
 
-@{
-    var games = @Model.Games.ToArray();
-}
+    <a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
 
-@if (games.Any())
-{
-    <a href="#league">Jump down to table</a>
-    <table class="scores">
-        <thead>
-            <tr>
-                <th>Home</th>
-                <th>Result</th>
-                <th>Away</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var game in games)
-            {
+    @{
+        var games = @Model.Games.ToArray();
+    }
+
+    @if (games.Any())
+    {
+        <a href="#league">Jump down to table</a>
+        <table class="scores">
+            <thead>
                 <tr>
-                    <td>@game.HomePlayer</td>
-                    <td>@game.Result</td>
-                    <td>@game.AwayPlayer</td>
+                    <th>Home</th>
+                    <th>Result</th>
+                    <th>Away</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <div>There are no games for player '@Model.Name'. Probably it's misspelling.</div>
-}
+            </thead>
+            <tbody>
+                @foreach (var game in games)
+                {
+                    <tr>
+                        <td>@game.HomePlayer</td>
+                        <td>@game.Result</td>
+                        <td>@game.AwayPlayer</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div>There are no games for player '@Model.Name'. Probably it's misspelling.</div>
+    }
+</div>
 
 
 <iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
