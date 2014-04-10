@@ -69,12 +69,20 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                     newGames.SingleOrDefault(
                         g => g.HomePlayer == oldGame.HomePlayer && g.AwayPlayer == oldGame.AwayPlayer);
 
-                if (matchingNewGame != null && matchingNewGame.Result != Constants.NotPlayed)
+                if (matchingNewGame != null)
                 {
-                    if (oldGame.Result == Constants.NotPlayed)
-                        oldGame.PlayedDate = _timeProvider.GetCurrentTime();    
+                    if (matchingNewGame.Result != Constants.NotPlayed)
+                    {
+                        if (oldGame.Result == Constants.NotPlayed)
+                            oldGame.PlayedDate = _timeProvider.GetCurrentTime();
 
-                    oldGame.Result = matchingNewGame.Result;
+                        oldGame.Result = matchingNewGame.Result;
+                    }
+                    else
+                    {
+                        oldGame.Result = Constants.NotPlayed;
+                        oldGame.PlayedDate = null;
+                    }
                 }
             }
         }

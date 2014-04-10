@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentAssertions;
 using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
@@ -93,6 +94,29 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             _leagueGamesScheduler.UpdateLeague(league, newGames);
 
             Assert.Equal(_earlierDate, oldGame.PlayedDate);
+        }
+
+        [Fact]
+        public void Game_removed_from_haxball_is_removed_from_league()
+        {
+            var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1", PlayedDate = _earlierDate };
+            var oldGames = new List<Game>();
+            oldGames.Add(oldGame);
+
+            var league = new League
+            {
+                Games = oldGames
+            };
+
+            var newGames = new List<Game>();
+            newGames.Add(
+                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed }
+                );
+
+            _leagueGamesScheduler.UpdateLeague(league, newGames);
+
+            oldGame.PlayedDate.Should().Be(null);
+            oldGame.Result.Should().Be(Constants.NotPlayed);
         }
 
         [Fact]
