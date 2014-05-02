@@ -22,6 +22,11 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
         private void RunLeague(League league)
         {
+            if (IsLeagueFinished(league))
+            {
+                return; 
+            }
+
             HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.LeagueNumer);
 
             var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
@@ -44,6 +49,14 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 ?? league.HardcodedWinner;
 
             _leagueGamesUpdater.UpdateLeague(league.LeagueNumer, title, newGames, players, league.SeasonNumber, winner);
+        }
+
+        private bool IsLeagueFinished(League league)
+        {
+            var db = DbRepository.GetDb();
+            var leagueFromDB = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == league.LeagueNumer);
+
+            return leagueFromDB != null && leagueFromDB.Progress.Played >= leagueFromDB.Progress.Total;
         }         
     }
 }
