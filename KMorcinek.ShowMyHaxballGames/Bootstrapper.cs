@@ -18,6 +18,7 @@ namespace KMorcinek.ShowMyHaxballGames
 
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
+            DbRepository.Initialize();
             AddTask("DoStuff", 1);
         }
 
