@@ -1,13 +1,16 @@
 ﻿body {
-    background-color: #939E7F;
     width: 965px;
     margin-left: auto;
     margin-right: auto;
+    font-family: Arial, Helvetica;
+    font-size:14px;
+    background:#fcfcfc;
 }
-
+ 
 div.container {
     width: 700px;
     margin: 0 auto;
+    background:#fcfcfc;
 }
 
 div.center-container {
