@@ -3,6 +3,8 @@ using HtmlAgilityPack;
 using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
+using log4net;
+using System.Reflection;
 
 namespace KMorcinek.ShowMyHaxballGames.Business
 {
@@ -10,6 +12,7 @@ namespace KMorcinek.ShowMyHaxballGames.Business
     {
         private readonly GameParser _gameParser = new GameParser();
         private readonly LeagueGamesUpdater _leagueGamesUpdater = new LeagueGamesUpdater(new RealTimeProvider(), new ProgressFactory());
+        private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void Run()
         {
@@ -22,33 +25,44 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
         private void RunLeague(League league)
         {
-            if (IsLeagueFinished(league))
+            try
             {
-                return; 
+                if (IsLeagueFinished(league))
+                {
+                    return;
+                }
+
+                logger.DebugFormat("Started parsing/updating leagueNumber: {0}", league.LeagueNumer);
+
+                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.LeagueNumer);
+
+                var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
+
+                var newGames = new List<Game>();
+
+                foreach (var gameNode in gamesNodes)
+                {
+                    var game = _gameParser.Parse(gameNode);
+                    if (FakePlayersHelper.IsNotFake(game.HomePlayer) && FakePlayersHelper.IsNotFake(game.AwayPlayer))
+                        newGames.Add(game);
+                }
+
+                var leagueParser = new LeagueParser();
+
+                var playersNode = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
+                var players = leagueParser.GetPlayers(playersNode);
+                var title = LeagueTitleParser.GetLeagueTitle(document);
+                var winner = leagueParser.GetWinner(document.DocumentNode)
+                    ?? league.HardcodedWinner;
+
+                _leagueGamesUpdater.UpdateLeague(league.LeagueNumer, title, newGames, players, league.SeasonNumber, winner);
+
+                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", league.LeagueNumer);
             }
-
-            HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.LeagueNumer);
-
-            var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
-
-            var newGames = new List<Game>();
-
-            foreach (var gameNode in gamesNodes)
+            catch (System.Exception ex)
             {
-                var game = _gameParser.Parse(gameNode);
-                if (FakePlayersHelper.IsNotFake(game.HomePlayer) && FakePlayersHelper.IsNotFake(game.AwayPlayer))
-                    newGames.Add(game);
+                logger.Warn("leagueNumber: " + league.LeagueNumer, ex);
             }
-
-            var leagueParser = new LeagueParser();
-
-            var playersNode = document.DocumentNode.SelectSingleNode("//div[@id='standings']");
-            var players = leagueParser.GetPlayers(playersNode);
-            var title = LeagueTitleParser.GetLeagueTitle(document);
-            var winner = leagueParser.GetWinner(document.DocumentNode)
-                ?? league.HardcodedWinner;
-
-            _leagueGamesUpdater.UpdateLeague(league.LeagueNumer, title, newGames, players, league.SeasonNumber, winner);
         }
 
         private bool IsLeagueFinished(League league)
