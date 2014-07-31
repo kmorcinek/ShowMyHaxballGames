@@ -1,0 +1,45 @@
+﻿<script type="text/ng-template" id="error-messages">
+    <div ng-message="required">Pole wymagane</div>
+</script>
+
+<form name="form" class="col-md-6 css-form" ng-class="{'did-try-submit': didTrySubmit}" novalidate>
+    <div class="form-group">
+        <label for="isFromHaxball">Is from haxball</label>
+        <input type="checkbox" class="form-control" id="isFromHaxball" ng-model="event.isFromHaxball">
+    </div>
+    <div class="form-group">
+        <label for="seasonNumber">Season</label>
+        <input class="form-control" id="seasonNumber" ng-model="event.seasonNumber" name="seasonNumber" required>
+        <div ng-messages="form.seasonNumber.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+    </div>
+    <div ng-if="event.isFromHaxball">
+        <div class="form-group">
+            <label for="haxballLeagueId">League id in haxball</label>
+            <input type="number" class="form-control" id="haxballLeagueId" ng-model="event.haxballLeagueId" name="haxballLeagueId" ng-disabled="disableEmail" required ng-unique>
+            <div ng-messages="form.haxballLeagueId.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+        </div>
+    </div>
+    <div ng-if="!event.isFromHaxball">
+        <div class="form-group">
+            <label for="status">Status</label>
+            <input class="form-control" id="status" ng-model="event.status" name="status" ng-disabled="disableEmail" required ng-unique>
+            <div ng-messages="form.status.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+        </div>
+        <div class="form-group">
+            <label for="url">Url</label>
+            <input type="url" class="form-control" id="url" ng-model="event.url" name="url" required>
+            <div ng-messages="form.url.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input class="form-control" id="title" ng-model="event.title" name="title" required>
+        <div ng-messages="form.title.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+    </div>
+    <button ng-click="save()" class="btn btn-default">Zapisz</button>
+</form>
+
+<form ng-if="!isNewEntry && event.isFromHaxball" style="margin-top:50px;" action="{{'/api/events/imageupload/' + event.id}}" method="post" enctype="multipart/form-data">
+     Only *.png please! <input name="upload" type="file" size="40" />
+    <input type="submit" value="Send updated file" />
+</form>

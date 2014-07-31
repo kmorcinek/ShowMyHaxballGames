@@ -21,7 +21,7 @@
     <ul>
         @foreach (var playerName in @Model.Players)
         {
-            <li><a href='/@Model.LeagueId/@playerName'>@playerName</a></li>
+            <li><a href='/@Model.HaxballLeagueId/@playerName'>@playerName</a></li>
         }
     </ul>
 
@@ -55,11 +55,10 @@
         </table>
     }
 </div>
-
-@{
-    var src = string.Format("/Content/images/{0}.png", Model.Title);
+ 
+@if (string.IsNullOrEmpty(Model.HolidayImageUrl) == false)
+{
+    <img class="holiday-image" src="@Model.HolidayImageUrl" />
 }
 
-<img src="@src" />
-
-<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='530'></iframe>
+<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.HaxballLeagueId' width='965' height='530'></iframe>

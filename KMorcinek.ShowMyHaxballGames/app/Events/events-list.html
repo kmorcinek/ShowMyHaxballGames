@@ -1,0 +1,7 @@
+﻿<a class="btn btn-primary" href="/admin/events/new">Add new event</a>
+<ul>
+    <li ng-repeat="event in events">
+        <a ng-href="/admin/events/{{event.id}}">{{event.title}}</a>
+        <!-- <button class="remove-offer btn btn-xs hide" ng-click="remove(event.id)">Remove</button> -->
+    </li>
+</ul>

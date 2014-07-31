@@ -2,18 +2,18 @@
 using System.IO;
 using KMorcinek.ShowMyHaxballGames.Models;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace KMorcinek.ShowMyHaxballGames.Business
 {
     public class LeaguesProvider
     {
-        public League[] Get()
+        public Event[] Get()
         {
-            string path = AppDomain.CurrentDomain.GetData("DataDirectory") + "\\" + "leagues.json";
-            var jsonLeagues = File.ReadAllText(path);
+            var db = DbRepository.GetDb();
 
-            var deserializedLeagues = JsonConvert.DeserializeObject<League[]>(jsonLeagues);
-            return deserializedLeagues;
+            Event[] events = db.UseOnceTo().Query<Event>().ToArray();
+            return events;
         }
     }
 }

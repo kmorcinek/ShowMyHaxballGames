@@ -17,18 +17,17 @@ namespace KMorcinek.ShowMyHaxballGames
             Get["/"] = _ =>
             {
                 var db = DbRepository.GetDb();
-                var leagues = db.UseOnceTo().Query<League>();
-
+                Event[] events = db.UseOnceTo().Query<Event>().ToArray().Reverse().ToArray();
+                
                 var leagueViewModels = new List<LeagueViewModel>();
 
-                foreach (var league in leagues.ToArray())
+                foreach (var eventEntry in events)
                 {
-                    leagueViewModels.Add(new LeagueViewModel(league));
+                    if (eventEntry.IsFromHaxball && eventEntry.HaxballLeague == null)
+                        continue;
+
+                    leagueViewModels.Add(new LeagueViewModel(eventEntry));
                 }
-
-                var goodOrder = new LeaguesProvider().Get().Select(p => p.LeagueNumer).ToList();
-
-                leagueViewModels = leagueViewModels.OrderBy(d => goodOrder.IndexOf(d.LeagueId)).ToList();
 
                 return View["Index", leagueViewModels];
             };
@@ -44,7 +43,7 @@ namespace KMorcinek.ShowMyHaxballGames
 
             Get["/{leagueId:int}/{name}"] = _ =>
             {
-                var leagueId = (int) _.leagueId.Value;
+                var leagueId = (int)_.leagueId.Value;
                 var name = (string)_.name.Value;
                 var gamesViewModelFactory = new GamesViewModelFactory();
                 var gamesViewModel = gamesViewModelFactory.Create(leagueId, name);

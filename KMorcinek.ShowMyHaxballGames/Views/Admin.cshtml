@@ -1,0 +1,14 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+@{
+    Layout = "layout.cshtml";
+}
+
+@section ScriptRegionTop{
+@Html.Raw(@Model.BundledVendorScripts)
+@Html.Raw(@Model.BundledScripts)
+}
+
+<div class="container center-container">
+    <div ng-view></div>
+</div>

@@ -1,5 +1,10 @@
-﻿using SisoDb;
+﻿using KMorcinek.ShowMyHaxballGames.Models;
+using Newtonsoft.Json;
+using SisoDb;
 using SisoDb.SqlCe4;
+using System;
+using System.IO;
+using System.Linq;
 
 namespace KMorcinek.ShowMyHaxballGames
 {
@@ -17,6 +22,28 @@ namespace KMorcinek.ShowMyHaxballGames
             if (db.Exists() == false)
             {
                 db.EnsureNewDatabase();
+            }
+
+            if (db.UseOnceTo().Query<Event>().Count() == 0)
+            {
+                string path = AppDomain.CurrentDomain.GetData("DataDirectory") + "\\" + "leagues.json";
+
+                if (File.Exists(path) == false)
+                    return;
+
+                var jsonLeagues = File.ReadAllText(path);
+
+                var deserializedEvents = JsonConvert.DeserializeObject<Event[]>(jsonLeagues);
+
+                foreach (var eventEntry in deserializedEvents.Reverse())
+                {
+                    if (string.IsNullOrEmpty(eventEntry.Url))
+                    {
+                        eventEntry.IsFromHaxball = true;
+                    }
+
+                    db.UseOnceTo().Insert(eventEntry);
+                }
             }
         }
     }

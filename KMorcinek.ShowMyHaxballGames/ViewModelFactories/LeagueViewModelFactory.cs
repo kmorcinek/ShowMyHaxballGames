@@ -11,18 +11,15 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
         public LeagueViewModel Create(int leagueId)
         {
             var db = DbRepository.GetDb();
-            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
+            var eventEntry = db.UseOnceTo().GetByQuery<Event>(t => t.HaxballLeagueId == leagueId);
 
-            var games = league.Games
+            var games = eventEntry.HaxballLeague.Games
                 .OrderByDescending(g => g.PlayedDate)
                 .Take(ShownLastGamesCount)
                 .Where(g => g.Result != Constants.NotPlayed);
 
-            var leagueViewModel = new LeagueViewModel
+            var leagueViewModel = new LeagueViewModel(eventEntry)
             {
-                LeagueId = leagueId,
-                Title = league.Title,
-                Players = league.Players,
                 NewestGames = games
             };
 

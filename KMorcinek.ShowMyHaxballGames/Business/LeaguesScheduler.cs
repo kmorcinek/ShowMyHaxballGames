@@ -23,18 +23,18 @@ namespace KMorcinek.ShowMyHaxballGames.Business
             }
         }
 
-        private void RunLeague(League league)
+        private void RunLeague(Event league)
         {
             try
             {
-                if (IsLeagueFinished(league))
+                if (IsLeagueFinished(league.Id))
                 {
                     return;
                 }
 
-                logger.DebugFormat("Started parsing/updating leagueNumber: {0}", league.LeagueNumer);
+                logger.DebugFormat("Started parsing/updating leagueNumber: {0}", league.HaxballLeagueId);
 
-                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.LeagueNumer);
+                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.HaxballLeagueId);
 
                 var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
 
@@ -55,20 +55,20 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 var winner = leagueParser.GetWinner(document.DocumentNode)
                     ?? league.HardcodedWinner;
 
-                _leagueGamesUpdater.UpdateLeague(league.LeagueNumer, title, newGames, players, league.SeasonNumber, winner);
+                _leagueGamesUpdater.UpdateLeague(league.HaxballLeagueId, title, newGames, players, league.SeasonNumber, winner);
 
-                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", league.LeagueNumer);
+                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", league.HaxballLeagueId);
             }
             catch (System.Exception ex)
             {
-                logger.Warn("leagueNumber: " + league.LeagueNumer, ex);
+                logger.Warn("leagueNumber: " + league.HaxballLeagueId, ex);
             }
         }
 
-        private bool IsLeagueFinished(League league)
+        private bool IsLeagueFinished(int eventId)
         {
             var db = DbRepository.GetDb();
-            var leagueFromDB = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == league.LeagueNumer);
+            var leagueFromDB = db.UseOnceTo().GetById<Event>(eventId).HaxballLeague;
 
             return leagueFromDB != null && leagueFromDB.Progress.Played >= leagueFromDB.Progress.Total;
         }         

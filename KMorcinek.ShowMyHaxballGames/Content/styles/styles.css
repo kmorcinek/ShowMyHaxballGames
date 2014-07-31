@@ -80,3 +80,8 @@ a:link, a.link {
 .breadcrumb a:hover, a.hover, a:active, a.active {
     text-decoration: underline;
 }
+
+.holiday-image{
+    margin: 20px auto 0 auto;
+    display: block;
+}

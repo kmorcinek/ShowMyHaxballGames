@@ -14,9 +14,9 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
             var involvedInGames = new List<Game>();
 
             var db = DbRepository.GetDb();
-            var league = db.UseOnceTo().GetByQuery<League>(t => t.LeagueNumer == leagueId);
+            var league = db.UseOnceTo().GetByQuery<Event>(t => t.HaxballLeagueId == leagueId);
 
-            foreach (var game in league.Games)
+            foreach (var game in league.HaxballLeague.Games)
             {
                 if (game.HomePlayer.Contains(name, StringComparison.CurrentCultureIgnoreCase) || game.AwayPlayer.Contains(name, StringComparison.CurrentCultureIgnoreCase))
                 {
@@ -31,7 +31,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModelFactories
 
             var gamesViewModel = new GamesViewModel
             {
-                LeagueId = leagueId,
+                HaxballLeagueId = leagueId,
                 LeagueTitle = league.Title,
                 Name = name,
                 Games = notPlayed.Concat(played)

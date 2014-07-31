@@ -13,13 +13,13 @@
 <div class="container center-container">
     <ul class="breadcrumb">
         <li class="with-arrow"><a href="/">Home</a></li>
-        <li class="with-arrow"><a href="/@Model.LeagueId/">@Model.LeagueTitle</a></li>
+        <li class="with-arrow"><a href="/@Model.HaxballLeagueId/">@Model.LeagueTitle</a></li>
         <li><span class="active">@Model.Name</span></li>
     </ul>
 
     @*Searched games for player '@Model.Name'<br />*@
 
-    <a href="http://www.haxball.gr/league/view/@Model.LeagueId" target="_blank">Original Haxball league</a><br />
+    <a href="http://www.haxball.gr/league/view/@Model.HaxballLeagueId" target="_blank">Original Haxball league</a><br />
 
     @{
         var games = @Model.Games.ToArray();
@@ -55,4 +55,4 @@
 </div>
 
 
-<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.LeagueId' width='965' height='650'></iframe>
+<iframe id="league" style="margin-top:20px" src='http://www.haxball.gr/league/view_embedded/@Model.HaxballLeagueId' width='965' height='650'></iframe>
