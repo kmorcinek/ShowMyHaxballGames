@@ -92,27 +92,6 @@
     <Content Include="Content\images\MW Friendly Summer.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\images\MW League S04 Div1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S04 Div2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S04 Div3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S05 Div3.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S05 Div2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S05 Div1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\images\MW League S06 Div1.png" />
-    <Content Include="Content\images\MW League S06 Div2.png" />
-    <Content Include="Content\images\MW League S06 Div3.png" />
     <Content Include="Content\images\MW League S07 Div1.png" />
     <Content Include="Content\images\MW League S07 Div2.png" />
     <Content Include="Content\styles\images\icons\bc-arr-black.png">
