@@ -9,6 +9,8 @@ namespace KMorcinek.ShowMyHaxballGames.Models
         public string Result { get; set; }
         public DateTime? PlayedDate { get; set; }
 
+        // Normally it should be a struct, 
+        // but structs are not serializable to SisoDB
         public Game CreateDeepCopy()
         {
             var game = new Game

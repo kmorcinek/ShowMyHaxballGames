@@ -69,6 +69,7 @@
   <ItemGroup>
     <Compile Include="ExploratoryTests.cs" />
     <Compile Include="GamesParsingTests.cs" />
+    <Compile Include="GamesUpdaterTests.cs" />
     <Compile Include="HtmlParsingHelper.cs" />
     <Compile Include="LeagueGamesUpdaterTests.cs" />
     <Compile Include="LeagueParsingTests.cs" />

@@ -635,6 +635,7 @@
     <Compile Include="AdminModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Business\GameParser.cs" />
+    <Compile Include="Business\GamesUpdater.cs" />
     <Compile Include="Business\LeagueGamesUpdater.cs" />
     <Compile Include="Business\LeagueParser.cs" />
     <Compile Include="Business\LeagueTitleParser.cs" />
@@ -644,7 +645,6 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Factories\ProgressFactory.cs" />
     <Compile Include="IndexModule.cs" />
-    <Compile Include="Business\LeaguesProvider.cs" />
     <Compile Include="Business\LeaguesScheduler.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\Game.cs" />

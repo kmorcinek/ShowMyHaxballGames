@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HtmlAgilityPack;
 using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
@@ -11,30 +12,35 @@ namespace KMorcinek.ShowMyHaxballGames.Business
     public class LeaguesScheduler
     {
         private readonly GameParser _gameParser = new GameParser();
-        private readonly LeagueGamesUpdater _leagueGamesUpdater = new LeagueGamesUpdater(new RealTimeProvider(), new ProgressFactory());
+        private readonly LeagueGamesUpdater _leagueGamesUpdater = new LeagueGamesUpdater(new RealTimeProvider(), new ProgressFactory(), new GamesUpdater(new RealTimeProvider()));
         private static readonly ILog logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public void Run()
         {
-            var leaguesProvider = new LeaguesProvider();
-            foreach (var league in leaguesProvider.Get())
+            var db = DbRepository.GetDb();
+            Event[] events = db.UseOnceTo().Query<Event>().ToArray();
+
+            foreach (var eventEntry in events)
             {
-                RunLeague(league);
+                if(false == eventEntry.IsFromHaxball)
+                    continue;
+                
+                RunLeague(eventEntry);
             }
         }
 
-        private void RunLeague(Event league)
+        private void RunLeague(Event eventEntry)
         {
             try
             {
-                if (IsLeagueFinished(league.Id))
+                if (IsLeagueFinished(eventEntry.HaxballLeague))
                 {
                     return;
                 }
 
-                logger.DebugFormat("Started parsing/updating leagueNumber: {0}", league.HaxballLeagueId);
+                logger.DebugFormat("Started parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
 
-                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + league.HaxballLeagueId);
+                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + eventEntry.HaxballLeagueId);
 
                 var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
 
@@ -53,24 +59,33 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 var players = leagueParser.GetPlayers(playersNode);
                 var title = LeagueTitleParser.GetLeagueTitle(document);
                 var winner = leagueParser.GetWinner(document.DocumentNode)
-                    ?? league.HardcodedWinner;
+                    ?? eventEntry.HardcodedWinner;
 
-                _leagueGamesUpdater.UpdateLeague(league.HaxballLeagueId, title, newGames, players, league.SeasonNumber, winner);
+                if (eventEntry.HaxballLeague == null)
+                {
+                    eventEntry.HaxballLeague = _leagueGamesUpdater.GetNewLeague(eventEntry.HaxballLeagueId, title, newGames,
+                        players, eventEntry.SeasonNumber, winner);
+                }
+                else
+                {
+                    eventEntry.HaxballLeague = _leagueGamesUpdater.UpdateLeague(eventEntry.HaxballLeague, eventEntry.HaxballLeagueId, title,
+                        newGames, players, eventEntry.SeasonNumber, winner);
+                }
 
-                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", league.HaxballLeagueId);
+                var db = DbRepository.GetDb();
+                db.UseOnceTo().Update(eventEntry);
+
+                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
             }
             catch (System.Exception ex)
             {
-                logger.Warn("leagueNumber: " + league.HaxballLeagueId, ex);
+                logger.Warn("leagueNumber: " + eventEntry.HaxballLeagueId, ex);
             }
         }
 
-        private bool IsLeagueFinished(int eventId)
+        private bool IsLeagueFinished(League haxballLeague)
         {
-            var db = DbRepository.GetDb();
-            var leagueFromDB = db.UseOnceTo().GetById<Event>(eventId).HaxballLeague;
-
-            return leagueFromDB != null && leagueFromDB.Progress.Played >= leagueFromDB.Progress.Total;
+            return haxballLeague != null && haxballLeague.Progress.Played >= haxballLeague.Progress.Total;
         }         
     }
 }

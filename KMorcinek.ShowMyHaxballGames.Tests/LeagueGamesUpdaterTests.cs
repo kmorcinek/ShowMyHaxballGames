@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Factories;
 using KMorcinek.ShowMyHaxballGames.Models;
@@ -27,139 +26,35 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             _progressFactoryMock.Setup(p => p.Create(It.IsAny<League>()))
                 .Returns(new Progress());
 
-            _leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object);
-        }
-
-        [Fact]
-        public void NotPlayedGameIsPlayedAndGetCurrentDate()
-        {
-            var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed, PlayedDate = null };
-            var oldGames = new List<Game>();
-            oldGames.Add(oldGame);
-
-            var league = new League
-            {
-                Games = oldGames
-            };
-
-            var newGames = new List<Game>();
-            newGames.Add(
-                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "2-2" }
-                );
-
-            _leagueGamesScheduler.UpdateLeague(league, newGames);
-
-            Assert.Equal(_currentDate, oldGame.PlayedDate);
-        }
-
-        [Fact]
-        public void NotPlayedGameIsStillNotPlayedAndDateDoesNotChange()
-        {
-            var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed, PlayedDate = null };
-            var oldGames = new List<Game>();
-            oldGames.Add(oldGame);
-
-            var league = new League
-            {
-                Games = oldGames
-            };
-
-            var newGames = new List<Game>();
-            newGames.Add(
-                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed }
-                );
-
-            _leagueGamesScheduler.UpdateLeague(league, newGames);
-
-            Assert.Equal(null, oldGame.PlayedDate);
-        }
-
-        [Fact]
-        public void AlreadyPlayedGameDoesNotUpdateItsDate()
-        {
-            var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1", PlayedDate = _earlierDate };
-            var oldGames = new List<Game>();
-            oldGames.Add(oldGame);
-
-            var league = new League
-            {
-                Games = oldGames
-            };
-
-            var newGames = new List<Game>();
-            newGames.Add(
-                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
-                );
-
-            _leagueGamesScheduler.UpdateLeague(league, newGames);
-
-            Assert.Equal(_earlierDate, oldGame.PlayedDate);
-        }
-
-        [Fact]
-        public void Game_removed_from_haxball_is_removed_from_league()
-        {
-            var oldGame = new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1", PlayedDate = _earlierDate };
-            var oldGames = new List<Game>();
-            oldGames.Add(oldGame);
-
-            var league = new League
-            {
-                Games = oldGames
-            };
-
-            var newGames = new List<Game>();
-            newGames.Add(
-                new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed }
-                );
-
-            _leagueGamesScheduler.UpdateLeague(league, newGames);
-
-            oldGame.PlayedDate.Should().Be(null);
-            oldGame.Result.Should().Be(Constants.NotPlayed);
+            _leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object, new GamesUpdater(timeProvider.Object));
         }
 
         [Fact]
         public void WhenLeagueDoesNotExistsNewPlayedGamesAreSetToCurrentDate()
         {
-            var db = DbRepository.GetDb();
-            db.EnsureNewDatabase();
-
             var newGames = new List<Game>();
             newGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
                 );
 
-            var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, "0", null);
+            var league = _leagueGamesScheduler.GetNewLeague(0, "", newGames, null, "0", null);
 
-            //var league = db.UseOnceTo().GetByQuery<League>(t => t.HaxballLeagueId == leagueId);
-
-            //Assert.NotNull(league);
-            //Assert.Equal(_currentDate, league.Games[0].PlayedDate);
-            //db.EnsureNewDatabase();
+            Assert.NotNull(league);
+            Assert.Equal(_currentDate, league.Games[0].PlayedDate);
         }
 
         [Fact]
         public void WhenLeagueDoesNotExistsNotPlayedGamesAreNotSet()
         {
-            var db = DbRepository.GetDb();
-            db.EnsureNewDatabase();
-
             var newGames = new List<Game>();
             newGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = Constants.NotPlayed }
                 );
 
-            var leagueId = 0;
-            _leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, "0", null);
+            var league = _leagueGamesScheduler.GetNewLeague(0, "", newGames, null, "0", null);
 
-            //var league = db.UseOnceTo().GetByQuery<League>(t => t.HaxballLeagueId == leagueId);
-
-            //Assert.NotNull(league);
-            //Assert.Equal(null, league.Games[0].PlayedDate);
-            //db.DeleteIfExists();
-            //db.EnsureNewDatabase();
+            Assert.NotNull(league);
+            Assert.Equal(null, league.Games[0].PlayedDate);
         }
 
         [Fact]
@@ -169,18 +64,14 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_earlierDate);
 
-            var leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object);
-
-            var db = DbRepository.GetDb();
-            db.EnsureNewDatabase();
+            var leagueGamesScheduler = new LeagueGamesUpdater(timeProvider.Object, _progressFactoryMock.Object, new GamesUpdater(timeProvider.Object));
 
             var previousGames = new List<Game>();
             previousGames.Add(
                 new Game { HomePlayer = "Sylwek", AwayPlayer = "Filip", Result = "1-1" }
                 );
 
-            var leagueId = 0;
-            leagueGamesScheduler.UpdateLeague(leagueId, "", previousGames, null, "0", null);
+            League league =  leagueGamesScheduler.GetNewLeague(0, "", previousGames, null, "0", null);
 
             var newGames = new List<Game>();
             newGames.Add(
@@ -190,14 +81,10 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
             timeProvider.Setup(p => p.GetCurrentTime())
                 .Returns(_currentDate);
 
-            leagueGamesScheduler.UpdateLeague(leagueId, "", newGames, null, "0", null);
+            League updatedLeague = leagueGamesScheduler.UpdateLeague(league, 0, "", newGames, null, "0", null);
 
-            //var league = db.UseOnceTo().GetByQuery<League>(t => t.HaxballLeagueId == leagueId);
-            
-            //Assert.NotNull(league);
-            //Assert.Equal(_earlierDate, league.Games[0].PlayedDate);
-            //db.DeleteIfExists();
-            //db.EnsureNewDatabase();
+            Assert.NotNull(league);
+            Assert.Equal(_earlierDate, updatedLeague.Games[0].PlayedDate);
         }
     }
 }
