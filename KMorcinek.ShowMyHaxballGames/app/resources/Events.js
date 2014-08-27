@@ -1,4 +1,4 @@
 ﻿angular.module('app')
-    .factory('Events', function ($resource, $http) {
+    .factory('Events', function ($resource) {
         return $resource('/api/events/:id', { id: '@id' });
     });

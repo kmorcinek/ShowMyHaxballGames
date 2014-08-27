@@ -1,8 +1,4 @@
 ﻿using Nancy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Optimization;
 
 namespace KMorcinek.ShowMyHaxballGames
@@ -20,10 +16,12 @@ namespace KMorcinek.ShowMyHaxballGames
 
         public AdminModule()
         {
-            Get["/admin"] = _ => { return AdminPage(); };
-            Get["/admin/events"] = _ => { return AdminPage(); };
-            Get["/admin/events/new"] = _ => { return AdminPage(); };
-            Get["/admin/events/{id:int}"] = _ => { return AdminPage(); };
+            Get["/admin"] = _ => AdminPage();
+            Get["/admin/events"] = _ => AdminPage();
+            Get["/admin/events/new"] = _ => AdminPage();
+            Get["/admin/events/{id:int}"] = _ => AdminPage();
+
+            Get["/admin/configuration/"] = _ => AdminPage();
         }
     }
 }

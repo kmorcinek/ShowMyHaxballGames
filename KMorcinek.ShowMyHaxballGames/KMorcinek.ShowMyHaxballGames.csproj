@@ -112,6 +112,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\app.js" />
+    <Content Include="app\Configuration\ConfigurationCtrl.js" />
+    <Content Include="app\Configuration\configuration-details.html" />
     <Content Include="app\core\validationHandler.js" />
     <Content Include="app\Events\events-list.html" />
     <Content Include="app\Events\events-details.html" />
@@ -119,7 +121,12 @@
     <Content Include="app\Events\EventsListCtrl.js" />
     <Content Include="app\Events\EventsEditCtrl.js" />
     <Content Include="app\Events\EventsNewCtrl.js" />
+    <Content Include="app\resources\Configurations.js" />
     <Content Include="app\resources\Events.js" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\styles\images\icons\bc-arr-black.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -129,6 +136,7 @@
     <Content Include="favicon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-cookies.js" />
@@ -150,6 +158,8 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\i18n\angular-locale_af-na.js" />
     <Content Include="Scripts\i18n\angular-locale_af-za.js" />
     <Content Include="Scripts\i18n\angular-locale_af.js" />
@@ -596,6 +606,14 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <None Include="Scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.0.js" />
+    <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Web.config" />
     <Content Include="wholeHaxballPage.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -613,6 +631,7 @@
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Views\Admin.cshtml" />
     <None Include="Properties\PublishProfiles\test.haxball.krzysztofmorcinek.com - Web Deploy.pubxml" />
+    <Content Include="Scripts\jquery-1.9.0.min.map" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -639,6 +658,7 @@
     <Compile Include="Business\LeagueGamesUpdater.cs" />
     <Compile Include="Business\LeagueParser.cs" />
     <Compile Include="Business\LeagueTitleParser.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="DbRepository.cs" />
     <Compile Include="Extensions\ReflectionHelper.cs" />
@@ -660,6 +680,7 @@
     <Compile Include="ViewModelFactories\LeagueViewModelFactory.cs" />
     <Compile Include="ViewModels\GamesViewModel.cs" />
     <Compile Include="ViewModels\LeagueViewModel.cs" />
+    <Compile Include="WebApi\ConfigurationModule.cs" />
     <Compile Include="WebApi\EventsModule.cs" />
   </ItemGroup>
   <ItemGroup>

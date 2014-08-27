@@ -45,6 +45,16 @@ namespace KMorcinek.ShowMyHaxballGames
                     db.UseOnceTo().Insert(eventEntry);
                 }
             }
+
+            if (db.UseOnceTo().Query<Configuration>().Count() == 0)
+            {
+                Configuration configuration = new Configuration
+                {
+                    ShowLastGamesCount = 12,
+                };
+
+                db.UseOnceTo().Insert(configuration);
+            }
         }
     }
 }
