@@ -1,4 +1,7 @@
-﻿angular.module('admin.events').controller('EventsListCtrl',
-    function ($scope, events) {
-        $scope.events = events;
-    });
+﻿(function() {
+    'use strict';
+        angular.module('admin.events').controller('EventsListCtrl',
+        function ($scope, events) {
+            $scope.events = events;
+        });
+})();
