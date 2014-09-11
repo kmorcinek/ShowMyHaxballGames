@@ -36,6 +36,10 @@
         <input class="form-control" id="title" ng-model="event.title" name="title" required>
         <div ng-messages="form.title.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
     </div>
+    <div class="form-group">
+        <label for="hardcodedWinner">Hardcoded Winner</label>
+        <input type="text" class="form-control" id="hardcodedWinner" ng-model="event.hardcodedWinner" name="hardcodedWinner">
+    </div>
     <button ng-click="save()" class="btn btn-default">Zapisz</button>
 </form>
 

@@ -32,7 +32,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
                 League league = eventEntry.HaxballLeague;
                 Title = league.Title;
                 Players = league.Players;
-                Winner = league.Winner;
+                Winner = league.Winner ?? eventEntry.HardcodedWinner;
 
                 bool isFinished = league.Progress.Played >= league.Progress.Total;
                 WrittenProgress = isFinished
@@ -48,6 +48,7 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
                 Status = eventEntry.Status;
                 Url = eventEntry.Url;
                 Title = eventEntry.Title;
+                Winner = eventEntry.HardcodedWinner;
             }
         }
     }
