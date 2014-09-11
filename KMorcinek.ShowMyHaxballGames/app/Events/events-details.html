@@ -43,7 +43,7 @@
     <button ng-click="save()" class="btn btn-default">Zapisz</button>
 </form>
 
-<form ng-if="!isNewEntry && event.isFromHaxball" style="margin-top:50px;" action="{{'/api/events/imageupload/' + event.id}}" method="post" enctype="multipart/form-data">
-     Only *.png please! <input name="upload" type="file" size="40" />
+<form class="col-md-12" ng-if="!isNewEntry && event.isFromHaxball" style="margin-top:50px;" action="{{'/api/events/imageupload/' + event.id}}" method="post" enctype="multipart/form-data">
+    Only *.png please! <input name="upload" type="file" size="40" />
     <input type="submit" value="Send updated file" />
 </form>
