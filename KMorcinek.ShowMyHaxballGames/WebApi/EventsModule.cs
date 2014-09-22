@@ -1,14 +1,12 @@
-﻿using KMorcinek.ShowMyHaxballGames;
+﻿using System.IO;
+using System.Linq;
 using KMorcinek.ShowMyHaxballGames.Extensions;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 using Nancy;
 using Nancy.ModelBinding;
-using System;
-using System.IO;
-using System.Linq;
 
-namespace KMorcinek.PrintingHouseCalculator.Web.WebApi
+namespace KMorcinek.ShowMyHaxballGames.WebApi
 {
     public class EventsModule : NancyModule
     {
@@ -85,7 +83,18 @@ namespace KMorcinek.PrintingHouseCalculator.Web.WebApi
 
                     return Response.AsRedirect("/admin/events/");
                 }
+
                 return HttpStatusCode.NotFound;
+            };
+
+            Delete["/{id:int}"] = parameters =>
+            {
+                int eventId = (int)parameters.id.Value;
+
+                var db = DbRepository.GetDb();
+                db.UseOnceTo().DeleteById<Event>(eventId);
+
+                return HttpStatusCode.NoContent;
             };
         }
     }

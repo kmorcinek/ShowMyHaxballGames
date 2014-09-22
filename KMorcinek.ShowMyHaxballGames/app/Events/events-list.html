@@ -2,6 +2,6 @@
 <ul>
     <li ng-repeat="event in events">
         <a ng-href="/admin/events/{{event.id}}">{{event.title}}</a>
-        <!-- <button class="remove-offer btn btn-xs hide" ng-click="remove(event.id)">Remove</button> -->
+         <button class="btn btn-xs" ng-click="remove(event)">&nbsp;X&nbsp;</button> 
     </li>
 </ul>

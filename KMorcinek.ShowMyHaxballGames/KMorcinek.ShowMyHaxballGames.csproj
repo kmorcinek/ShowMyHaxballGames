@@ -115,6 +115,7 @@
     <Content Include="app\app.js" />
     <Content Include="app\Configuration\ConfigurationCtrl.js" />
     <Content Include="app\Configuration\configuration-details.html" />
+    <Content Include="app\core\Helpers.js" />
     <Content Include="app\core\validationHandler.js" />
     <Content Include="app\Events\events-list.html" />
     <Content Include="app\Events\events-details.html" />
