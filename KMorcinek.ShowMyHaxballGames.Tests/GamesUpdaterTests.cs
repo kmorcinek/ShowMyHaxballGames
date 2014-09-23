@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using FluentAssertions;
 using KMorcinek.ShowMyHaxballGames.Business;
 using KMorcinek.ShowMyHaxballGames.Models;
 using KMorcinek.ShowMyHaxballGames.Utils;
 using Moq;
 using Xunit;
+using Xunit.Should;
 
 namespace KMorcinek.ShowMyHaxballGames.Tests
 {
@@ -89,8 +89,8 @@ namespace KMorcinek.ShowMyHaxballGames.Tests
 
             _gamesScheduler.UpdateGames(oldGames, newGames);
 
-            oldGame.PlayedDate.Should().Be(null);
-            oldGame.Result.Should().Be(Constants.NotPlayed);
+            oldGame.PlayedDate.ShouldBeNull();
+            oldGame.Result.ShouldBe(Constants.NotPlayed);
         }
     }
 }
