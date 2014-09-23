@@ -28,7 +28,9 @@
         <div class="form-group">
             <label for="url">Url</label>
             <input type="url" class="form-control" id="url" ng-model="event.url" name="url" required>
-            <div ng-messages="form.url.$error" ng-messages-include="error-messages" ng-if="didTrySubmit"></div>
+            <div ng-messages="form.url.$error" ng-messages-include="error-messages" ng-if="didTrySubmit">
+                <div ng-message="url">Nieprawidłowy URL</div>
+            </div>
         </div>
     </div>
     <div class="form-group">
