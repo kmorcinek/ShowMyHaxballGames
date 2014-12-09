@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using KMorcinek.ShowMyHaxballGames.Models;
-using System;
 
 namespace KMorcinek.ShowMyHaxballGames.ViewModels
 {
     public class LeagueViewModel
     {
-        public int  Id { get; set; }
+        public int Id { get; set; }
         public int HaxballLeagueId { get; set; }
         public string Title { get; set; }
         public string SeasonNumber { get; set; }
@@ -32,12 +31,16 @@ namespace KMorcinek.ShowMyHaxballGames.ViewModels
                 League league = eventEntry.HaxballLeague;
                 Title = league.Title;
                 Players = league.Players;
-                Winner = league.Winner ?? eventEntry.HardcodedWinner;
+                Winner = string.IsNullOrWhiteSpace(eventEntry.HardcodedWinner)
+                    ? league.Winner
+                    : eventEntry.HardcodedWinner;
 
                 bool isFinished = league.Progress.Played >= league.Progress.Total;
                 WrittenProgress = isFinished
                     ? "Finished"
-                    : string.Format("In progress ({0}/{1})", league.Progress.Played, league.Progress.Total);
+                    : string.Format("In progress ({0}/{1})",
+                        league.Progress.Played,
+                        league.Progress.Total);
                 HolidayImageUrl = isFinished
                     ? null
                     : string.Format("/HolidayImages/{0}.png", Id);
