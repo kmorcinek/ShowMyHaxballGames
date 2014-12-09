@@ -40,8 +40,12 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
                 logger.DebugFormat("Started parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
 
+                var url = string.Format("http://www.haxball.gr/league/view/{0}?g={1}",
+                    eventEntry.HaxballLeagueId,
+                    Guid.NewGuid().ToString("N"));
+
                 HtmlDocument document =
-                    new HtmlWeb().Load("http://www.haxball.gr/league/view/" + eventEntry.HaxballLeagueId);
+                    new HtmlWeb().Load(url);
 
                 var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
 
