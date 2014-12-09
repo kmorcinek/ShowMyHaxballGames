@@ -22,9 +22,9 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
             foreach (var eventEntry in events)
             {
-                if(false == eventEntry.IsFromHaxball)
+                if (false == eventEntry.IsFromHaxball)
                     continue;
-                
+
                 RunLeague(eventEntry);
             }
         }
@@ -40,9 +40,18 @@ namespace KMorcinek.ShowMyHaxballGames.Business
 
                 logger.DebugFormat("Started parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
 
-                HtmlDocument document = new HtmlWeb().Load("http://www.haxball.gr/league/view/" + eventEntry.HaxballLeagueId);
+                HtmlDocument document =
+                    new HtmlWeb().Load("http://www.haxball.gr/league/view/" + eventEntry.HaxballLeagueId);
 
                 var gamesNodes = document.DocumentNode.SelectNodes("//div[@id='fixtures']//div[@class='fixture-row']");
+
+                if (gamesNodes == null)
+                {
+                    logger.DebugFormat(
+                        "Probably league was removed from Haxball before it was finished. Id: {0}",
+                        eventEntry.HaxballLeagueId);
+                    return;
+                }
 
                 var newGames = new List<Game>();
 
@@ -59,33 +68,37 @@ namespace KMorcinek.ShowMyHaxballGames.Business
                 var players = leagueParser.GetPlayers(playersNode);
                 var title = LeagueTitleParser.GetLeagueTitle(document);
                 var winner = leagueParser.GetWinner(document.DocumentNode)
-                    ?? eventEntry.HardcodedWinner;
+                             ?? eventEntry.HardcodedWinner;
 
                 if (eventEntry.HaxballLeague == null)
                 {
-                    eventEntry.HaxballLeague = _leagueGamesUpdater.GetNewLeague(eventEntry.HaxballLeagueId, title, newGames,
+                    eventEntry.HaxballLeague = _leagueGamesUpdater.GetNewLeague(eventEntry.HaxballLeagueId, title,
+                        newGames,
                         players, eventEntry.SeasonNumber, winner);
                 }
                 else
                 {
-                    eventEntry.HaxballLeague = _leagueGamesUpdater.UpdateLeague(eventEntry.HaxballLeague, eventEntry.HaxballLeagueId, title,
+                    eventEntry.HaxballLeague = _leagueGamesUpdater.UpdateLeague(eventEntry.HaxballLeague,
+                        eventEntry.HaxballLeagueId, title,
                         newGames, players, eventEntry.SeasonNumber, winner);
                 }
 
                 var db = DbRepository.GetDb();
                 db.UseOnceTo().Update(eventEntry);
-
-                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
             }
             catch (System.Exception ex)
             {
                 logger.Warn("leagueNumber: " + eventEntry.HaxballLeagueId, ex);
+            }
+            finally
+            {
+                logger.DebugFormat("Finished parsing/updating leagueNumber: {0}", eventEntry.HaxballLeagueId);
             }
         }
 
         private bool IsLeagueFinished(League haxballLeague)
         {
             return haxballLeague != null && haxballLeague.Progress.Played >= haxballLeague.Progress.Total;
-        }         
+        }
     }
 }
